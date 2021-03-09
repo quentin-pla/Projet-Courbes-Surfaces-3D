@@ -18,7 +18,7 @@ myOpenGLWidget::myOpenGLWidget(QWidget *parent) : QOpenGLWidget(parent) {
     setFocus();
 
     m_timer = new QTimer(this);
-    m_timer->setInterval(50);  // msec
+    m_timer->setInterval(50);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
@@ -31,7 +31,6 @@ myOpenGLWidget::~myOpenGLWidget() {
 void myOpenGLWidget::initializeGL() {
     initializeOpenGLFunctions();
     glEnable(GL_DEPTH_TEST);
-    glClearColor(0, 0, 0, 1);
 
     makeGLObjects();
 
@@ -63,6 +62,7 @@ void myOpenGLWidget::resizeGL(int w, int h) {
 void myOpenGLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     gl_funcs = context()->functions();
+    glClearColor(0, 0, 1, 1);
 
     m_program->bind();
 
@@ -72,10 +72,17 @@ void myOpenGLWidget::paintGL() {
     cam_mat.translate(0, 0, -m_distance);
     world_mat.rotate(m_angle, 0, 1, 0);
 
-    for (GLObject *object : objects)
-        object->draw(m_program, gl_funcs, world_mat, proj_mat, cam_mat, shape_mat);
+    drawScene();
 
     m_program->release();
+}
+
+void myOpenGLWidget::drawScene() {
+    for (GLObject *object : objects) {
+        shape_mat = world_mat;
+        setTransforms();
+        object->draw(m_program, gl_funcs);
+    }
 }
 
 void myOpenGLWidget::resetMatrix() {
@@ -85,10 +92,16 @@ void myOpenGLWidget::resetMatrix() {
     shape_mat.setToIdentity();
 }
 
+void myOpenGLWidget::setTransforms() {
+    QMatrix4x4 mv_mat = cam_mat*shape_mat;
+    m_program->setUniformValue("projMatrix", proj_mat);
+    m_program->setUniformValue("mvMatrix", mv_mat);
+}
+
 void myOpenGLWidget::keyPressEvent(QKeyEvent *ev) {
     switch (ev->key()) {
         case Qt::Key_Z :
-            m_angle += 1;
+            m_angle += 10;
             if (m_angle >= 360) m_angle -= 360;
             update();
             break;
@@ -113,7 +126,3 @@ void myOpenGLWidget::keyPressEvent(QKeyEvent *ev) {
 void myOpenGLWidget::onTimeout() {
     update();
 }
-
-
-
-

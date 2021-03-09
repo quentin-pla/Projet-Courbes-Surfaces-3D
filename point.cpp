@@ -1,29 +1,25 @@
 #include "point.h"
-#include "iostream"
 
 Point::Point(QColor *color, float size) {
-    m_coords = QVector3D(0, 0, 0);
+    m_coords = {0, 0, 0};
     m_color = *color;
     m_size = size;
-    vertices.append(m_coords);
-    colors.append(m_color);
-    addVBO(GL_POINTS);
 }
 
 Point::Point(float x, float y, float z, QColor *color, float size) : Point(color, size) {
-    m_coords = QVector3D(x, y, z);
+    m_coords = {x, y, z};
 }
 
-Point::Point(const Point &p) : Point(p.getX(), p.getY(), p.getZ(), new QColor(p.getColor()), p.getSize()) {}
-
-void Point::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
-                 QMatrix4x4& world_mat, QMatrix4x4& proj_mat, QMatrix4x4& cam_mat, QMatrix4x4& shape_mat) {
+void Point::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
     glPointSize(m_size);
-    GLObject::draw(program, glFuncs, world_mat, proj_mat, cam_mat, shape_mat);
+    GLObject::draw(program, glFuncs);
 }
 
-void Point::applyTransforms(QMatrix4x4 &mat) {
-    mat.translate(getCoords());
+void Point::render() {
+    vertices.append(m_coords);
+    colors.append(m_color);
+    addVBO(GL_POINTS);
+    GLObject::render();
 }
 
 // GETTERS & SETTERS //

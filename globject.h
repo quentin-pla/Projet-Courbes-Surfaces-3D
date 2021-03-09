@@ -13,6 +13,14 @@ class GLObject {
 
 public:
     /**
+     * Dessiner l'objet
+     * @param program programme OpenGL
+     * @param glFuncs fonctions OpenGL
+     */
+    virtual void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs);
+
+protected:
+    /**
      * Constructeur
      */
     explicit GLObject() = default;
@@ -22,20 +30,6 @@ public:
      */
     ~GLObject();
 
-    /**
-     * Dessiner l'objet
-     * @param program programme OpenGL
-     * @param glFuncs fonctions OpenGL
-     */
-    virtual void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
-                      QMatrix4x4& world_mat, QMatrix4x4& proj_mat, QMatrix4x4& cam_mat, QMatrix4x4& shape_mat);
-
-    /**
-     * Appliquer des transformations
-     */
-    virtual void applyTransforms(QMatrix4x4&);
-
-protected:
     /**
      * Liste des sommets
      */
@@ -51,6 +45,16 @@ protected:
      * @param drawType type de dessin
      */
     void addVBO(const unsigned char &drawType);
+
+    /**
+     * Est-ce que l'objet doit être rendu graphiquement
+     */
+    bool isRendered = false;
+
+    /**
+     * Générer les VBOs nécessaires pour l'affichage
+     */
+    virtual void render();
 
 private:
     /**

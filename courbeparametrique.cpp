@@ -7,12 +7,11 @@ CourbeParametrique::CourbeParametrique(const QVector<Point *> &points, const boo
         m_control_polygon.append(new Segment(m_control_points[i], m_control_points[i+1], true));
 }
 
-void CourbeParametrique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs, QMatrix4x4 &world_mat,
-                              QMatrix4x4 &proj_mat, QMatrix4x4 &cam_mat, QMatrix4x4 &shape_mat) {
+void CourbeParametrique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
     if (m_drawControlPolygon)
         for (Segment *seg : m_control_polygon)
-            seg->draw(program, glFuncs, world_mat, proj_mat, cam_mat, shape_mat);
-    GLObject::draw(program, glFuncs, world_mat, proj_mat, cam_mat, shape_mat);
+            seg->draw(program, glFuncs);
+    GLObject::draw(program, glFuncs);
 }
 
 void CourbeParametrique::showControlPolygon(bool value) {

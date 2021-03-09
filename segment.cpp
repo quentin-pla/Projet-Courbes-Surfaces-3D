@@ -10,12 +10,11 @@ Segment::Segment(Point* a, Point* b, const bool &drawExtremities) : Discretisati
     addVBO(GL_LINES);
 }
 
-void Segment::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
-                   QMatrix4x4& world_mat, QMatrix4x4& proj_mat, QMatrix4x4& cam_mat, QMatrix4x4& shape_mat) {
+void Segment::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
     if (m_drawExtremities)
         for (Point *point : m_points)
-            point->draw(program, glFuncs, world_mat, proj_mat, cam_mat, shape_mat);
-    GLObject::draw(program, glFuncs, world_mat, proj_mat, cam_mat, shape_mat);
+            point->draw(program, glFuncs);
+    GLObject::draw(program, glFuncs);
 }
 
 void Segment::showExtremities(bool value) {

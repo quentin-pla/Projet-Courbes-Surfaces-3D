@@ -111,9 +111,19 @@ private:
     void resetMatrix();
 
     /**
+     * Appliquer les transformations
+     */
+    void setTransforms();
+
+    /**
      * Initialiser les objets OpenGL
      */
 	void makeGLObjects();
+
+	/**
+	 * Dessiner la scène
+	 */
+	void drawScene();
 };
 
 

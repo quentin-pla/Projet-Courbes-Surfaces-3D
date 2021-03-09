@@ -68,17 +68,7 @@ public:
      */
     void showExtremities(bool value);
 
-    /**
-     * Dessiner le segment
-     * @param program programme
-     * @param glFuncs fonctions OpenGL
-     * @param world_mat matrice du monde
-     * @param proj_mat matrice de projection
-     * @param cam_mat matrice caméra
-     * @param shape_mat matrice de transformation
-     */
-    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
-              QMatrix4x4& world_mat, QMatrix4x4& proj_mat, QMatrix4x4& cam_mat, QMatrix4x4& shape_mat) override;
+    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
 };
 
 #endif // SEGMENT_H

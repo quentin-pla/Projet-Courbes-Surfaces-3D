@@ -39,31 +39,15 @@ public:
     Point(float x, float y, float z, QColor* color = new QColor(Qt::white), float size = 20.0f);
 
     /**
-     * Constructeur par copie
-     */
-    Point(const Point &);
-
-    /**
      * Destructeur
      */
     ~Point() = default;
 
-    /**
-     * Dessiner le point
-     * @param program programme
-     * @param glFuncs fonctions OpenGL
-     * @param world_mat matrice du monde
-     * @param proj_mat matrice de projection
-     * @param cam_mat matrice caméra
-     * @param shape_mat matrice de transformation
-     */
-    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
-              QMatrix4x4& world_mat, QMatrix4x4& proj_mat, QMatrix4x4& cam_mat, QMatrix4x4& shape_mat) override;
+    // OVERRIDE //
 
-    /**
-     * Appliquer les transformations
-     */
-    void applyTransforms(QMatrix4x4&) override;
+    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
+
+    void render() override;
 
     // GETTERS & SETTERS //
 

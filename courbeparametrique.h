@@ -32,11 +32,6 @@ protected:
     QVector<Point*> m_control_points;
 
     /**
-     * Liste des segments formant la courbe
-     */
-    QVector<Segment*> m_curve;
-
-    /**
      * Polygone de controle
      */
     QVector<Segment*> m_control_polygon;
@@ -48,17 +43,7 @@ public:
      */
     void showControlPolygon(bool value);
 
-    /**
-     * Dessiner la courbe
-     * @param program programme
-     * @param glFuncs fonctions OpenGL
-     * @param world_mat matrice du monde
-     * @param proj_mat matrice de projection
-     * @param cam_mat matrice caméra
-     * @param shape_mat matrice de transformation
-     */
-    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
-              QMatrix4x4& world_mat, QMatrix4x4& proj_mat, QMatrix4x4& cam_mat, QMatrix4x4& shape_mat) override;
+    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
 };
 
 

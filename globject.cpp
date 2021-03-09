@@ -7,13 +7,8 @@ GLObject::~GLObject() {
         colorsBuffer->destroy();
 }
 
-void GLObject::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
-                    QMatrix4x4& world_mat, QMatrix4x4& proj_mat, QMatrix4x4& cam_mat, QMatrix4x4& shape_mat) {
-    shape_mat = world_mat;
-    applyTransforms(shape_mat);
-
-    program->setUniformValue("projMatrix", proj_mat);
-    program->setUniformValue("mvMatrix", cam_mat * shape_mat);
+void GLObject::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
+    if (!isRendered) render();
 
     for (int i = 0; i < verticesBuffers.count(); ++i) {
         verticesBuffers[i]->bind();
@@ -24,7 +19,7 @@ void GLObject::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
         program->setAttributeBuffer("colAttr", GL_FLOAT, 0, 3);
         program->enableAttributeArray("colAttr");
 
-        glFuncs->glDrawArrays(drawTypes[i], 0, verticesBuffers[i]->size());
+        glFuncs->glDrawArrays(drawTypes[i], 0, verticesBuffers[i]->size() / sizeof(GLfloat) / 3);
 
         program->disableAttributeArray("posAttr");
         verticesBuffers[i]->release();
@@ -45,7 +40,7 @@ void GLObject::addVBO(const unsigned char &drawType) {
 
     QVector<QVector3D> colorsVector;
     for (const QColor& color : colors)
-        colorsVector.append(QVector3D(color.redF(), color.greenF(), color.blueF()));
+        colorsVector.append({(float) color.redF(), (float) color.greenF(), (float) color.blueF()});
 
     colorsBuffer->create();
     colorsBuffer->bind();
@@ -60,4 +55,6 @@ void GLObject::addVBO(const unsigned char &drawType) {
     colors.clear();
 }
 
-void GLObject::applyTransforms(QMatrix4x4 &) {}
+void GLObject::render() {
+    isRendered = true;
+}

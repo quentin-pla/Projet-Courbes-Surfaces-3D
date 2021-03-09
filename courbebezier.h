@@ -17,23 +17,8 @@ public:
      */
     ~CourbeBezier() = default;
 
-    /**
-     * Dessiner la courbe
-     * @param program programme
-     * @param glFuncs fonctions OpenGL
-     * @param world_mat matrice du monde
-     * @param proj_mat matrice de projection
-     * @param cam_mat matrice caméra
-     * @param shape_mat matrice de transformation
-     */
-    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
-              QMatrix4x4& world_mat, QMatrix4x4& proj_mat, QMatrix4x4& cam_mat, QMatrix4x4& shape_mat) override;
+    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
 
-    /**
-     * Obtenir un point à une position spécifique
-     * @param pos position
-     * @return point
-     */
     Point* getValue(float pos, const QColor &color) const override;
 };
 
