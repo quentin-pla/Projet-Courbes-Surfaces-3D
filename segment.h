@@ -31,7 +31,7 @@ public:
     /**
      * Destructeur
      */
-    ~Segment();
+    ~Segment() = default;
 
     /**
      * Définir le point de départ
@@ -48,7 +48,7 @@ public:
      * @param pos position
      * @return point
      */
-    Point* getPoint(float pos);
+    Point* getValue(float pos, const QColor &color) const override;
 
     /**
      * Obtenir le point de départ

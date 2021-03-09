@@ -7,7 +7,7 @@
 /**
  * Courbe paramétrique
  */
-class CourbeParametrique : public GLObject {
+class CourbeParametrique : public GLObject, public Discretisation {
 private:
     /**
      * Dessiner le polygone de controle
@@ -32,29 +32,16 @@ protected:
     QVector<Point*> m_control_points;
 
     /**
+     * Liste des segments formant la courbe
+     */
+    QVector<Segment*> m_curve;
+
+    /**
      * Polygone de controle
      */
     QVector<Segment*> m_control_polygon;
 
-    /**
-     * Discrétisation
-     */
-    Discretisation* discretisation;
-
 public:
-    /**
-     * Obtenir le point à une certaine valeur
-     * @param color couleur du point
-     * @return point
-     */
-    virtual Point* getPoint(float value) const;
-
-    /**
-     * Longueur totale
-     * @return
-     */
-    float length() const;
-
     /**
      * Afficher le polygone de controle
      * @param value valeur

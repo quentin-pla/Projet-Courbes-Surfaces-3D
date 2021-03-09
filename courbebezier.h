@@ -2,7 +2,6 @@
 #define COURBEBEZIER_H
 
 #include "courbeparametrique.h"
-#include "segment.h"
 
 class CourbeBezier : public CourbeParametrique {
 public:
@@ -12,6 +11,10 @@ public:
      * @param drawControlPolygon afficher le polygone de controle
      */
     explicit CourbeBezier(const QVector<Point*> &points, const bool &drawControlPolygon = false);
+
+    /**
+     * Destructeur
+     */
     ~CourbeBezier() = default;
 
     /**
@@ -27,11 +30,11 @@ public:
               QMatrix4x4& world_mat, QMatrix4x4& proj_mat, QMatrix4x4& cam_mat, QMatrix4x4& shape_mat) override;
 
     /**
-     * Obtenir le point à une certaine valeur
-     * @param color couleur du point
+     * Obtenir un point à une position spécifique
+     * @param pos position
      * @return point
      */
-    Point* getPoint(float value) const override;
+    Point* getValue(float pos, const QColor &color) const override;
 };
 
 

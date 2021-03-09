@@ -11,7 +11,7 @@ public:
      * @param step pas
      * @param color couleur affichage
      */
-    explicit Discretisation(const QVector<Point*> &points, QColor* color = new QColor(Qt::white));
+    explicit Discretisation(const QVector<Point*> &points);
 
     /**
      * Destructeur
@@ -21,16 +21,17 @@ public:
     /**
      * Obtenir un point à une certaine position
      * @param pos position
+     * @param color couleur
      * @return point
      */
-    virtual Point* getValue(float pos) const;
+    virtual Point* getValue(float pos, const QColor &color) const { return nullptr; };
 
     /**
      * Obtenir la liste des points selon un pas spécifique
      * @param step pas
      * @return liste de points
      */
-    QVector<Point*> generateStepPoints(float step);
+    QVector<Point*> generateStepPoints(float step, QColor* color = new QColor(Qt::white)) const;
 
     /**
      * Longueur totale
@@ -38,27 +39,11 @@ public:
      */
     float length() const;
 
-    /**
-     * Obtenir les points générés
-     * @return
-     */
-    const QVector<Point *> &getStepPoints() const;
-
 private:
     /**
      * Liste des points de l'objet
      */
     QVector<Point*> object_points;
-
-    /**
-     * Couleur d'affichage
-     */
-    QColor m_color;
-
-    /**
-     * Points générés
-     */
-    QVector<Point*> m_points;
 };
 
 
