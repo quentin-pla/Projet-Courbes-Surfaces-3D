@@ -107,6 +107,12 @@ public:
      * @param newCoords nouvelles coordonnées
      */
     void setCoords(const QVector3D &newCoords);
+
+    /**
+     * Définir la couleur
+     * @param color couleur
+     */
+    void setColor(const QColor &color);
 };
 
 #endif // POINT_H

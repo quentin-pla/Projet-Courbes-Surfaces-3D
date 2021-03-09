@@ -7,7 +7,7 @@ Discretisation::Discretisation(const QVector<Point*> &points) {
 QVector<Point*> Discretisation::generateStepPoints(float step, QColor *color) const {
     QVector<Point*> points;
     for (float i = 0; i < 1.0f + step; i += step)
-        points.push_back(getValue(i, *color));
+        points.push_back(getValue(i, color));
     return points;
 }
 

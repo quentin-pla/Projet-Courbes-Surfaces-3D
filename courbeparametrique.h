@@ -19,7 +19,8 @@ protected:
      * Constructeur
      * @param points liste des points de la courbe
      */
-    explicit CourbeParametrique(const QVector<Point*> &points, const bool &drawControlPolygon = false);
+    explicit CourbeParametrique(const QVector<Point*> &points, QColor* color = new QColor(Qt::white),
+                                const bool &drawControlPolygon = false);
 
     /**
      * Destructeur

@@ -10,7 +10,8 @@ public:
      * @param points points de controle
      * @param drawControlPolygon afficher le polygone de controle
      */
-    explicit CourbeBezier(const QVector<Point*> &points, const bool &drawControlPolygon = false);
+    explicit CourbeBezier(const QVector<Point*> &points, QColor* color = new QColor(Qt::white),
+                          const bool &drawControlPolygon = false);
 
     /**
      * Destructeur
@@ -19,7 +20,7 @@ public:
 
     void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
 
-    Point* getValue(float pos, const QColor &color) const override;
+    Point* getValue(float pos, QColor* color = new QColor(Qt::white)) const override;
 };
 
 

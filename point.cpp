@@ -43,3 +43,5 @@ void Point::setX(const float &v) { m_coords.setX(v); }
 void Point::setY(const float &v) { m_coords.setY(v); }
 
 void Point::setZ(const float &v) { m_coords.setZ(v); }
+
+void Point::setColor(const QColor &color) { m_color = color; }

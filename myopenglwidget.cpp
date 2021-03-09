@@ -49,7 +49,7 @@ void myOpenGLWidget::makeGLObjects() {
     auto C = new Point(.8, 1, 0);
     auto D = new Point(0, 1.5, 0);
 
-    auto CB = new CourbeBezier({A, B, C, D}, true);
+    auto CB = new CourbeBezier({A, B, C, D}, new QColor(Qt::red), true);
 
     objects.append(CB);
 }
@@ -62,7 +62,7 @@ void myOpenGLWidget::resizeGL(int w, int h) {
 void myOpenGLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     gl_funcs = context()->functions();
-    glClearColor(0, 0, 1, 1);
+    glClearColor(0, 0, 0, 1);
 
     m_program->bind();
 

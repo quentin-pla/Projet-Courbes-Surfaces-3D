@@ -26,7 +26,7 @@ public:
      * @param end point d'arrivée
      * @param drawExtremities afficher les extrémités
      */
-    Segment(Point* start, Point* end, const bool &drawExtremities = false);
+    Segment(Point* start, Point* end, QColor* color = new QColor(Qt::white), const bool &drawExtremities = false);
 
     /**
      * Destructeur
@@ -48,7 +48,7 @@ public:
      * @param pos position
      * @return point
      */
-    Point* getValue(float pos, const QColor &color) const override;
+    Point* getValue(float pos, QColor* color = new QColor(Qt::white)) const override;
 
     /**
      * Obtenir le point de départ

@@ -24,7 +24,7 @@ public:
      * @param color couleur
      * @return point
      */
-    virtual Point* getValue(float pos, const QColor &color) const { return nullptr; };
+    virtual Point* getValue(float pos, QColor* color) const { return nullptr; };
 
     /**
      * Obtenir la liste des points selon un pas spécifique

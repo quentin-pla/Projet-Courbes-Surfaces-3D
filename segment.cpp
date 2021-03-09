@@ -1,11 +1,12 @@
 #include "segment.h"
 
-Segment::Segment(Point* a, Point* b, const bool &drawExtremities) : Discretisation({a,b}) {
+Segment::Segment(Point* a, Point* b, QColor* color, const bool &drawExtremities) : Discretisation({a,b}) {
     m_drawExtremities = drawExtremities;
     m_points.append({a, b});
     for (Point* point : m_points) {
+        point->setColor(*color);
         vertices.append(point->getCoords());
-        colors.append(point->getColor());
+        colors.append(*color);
     }
     addVBO(GL_LINES);
 }
@@ -21,11 +22,11 @@ void Segment::showExtremities(bool value) {
     m_drawExtremities = value;
 }
 
-Point *Segment::getValue(float pos, const QColor &color) const {
+Point *Segment::getValue(float pos, QColor* color) const {
     float x = (1 - pos) * getStart()->getX() + pos * getEnd()->getX();
     float y = (1 - pos) * getStart()->getY() + pos * getEnd()->getY();
     float z = (1 - pos) * getStart()->getZ() + pos * getEnd()->getZ();
-    return new Point(x, y, z, new QColor(color));
+    return new Point(x, y, z, color);
 }
 
 // GETTERS & SETTERS //

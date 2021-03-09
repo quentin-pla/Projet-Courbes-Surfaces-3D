@@ -1,10 +1,11 @@
 #include "courbeparametrique.h"
 
-CourbeParametrique::CourbeParametrique(const QVector<Point *> &points, const bool &drawControlPolygon) : Discretisation(points) {
+CourbeParametrique::CourbeParametrique(const QVector<Point *> &points, QColor* color,
+                                       const bool &drawControlPolygon) : Discretisation(points) {
     m_drawControlPolygon = drawControlPolygon;
     m_control_points = points;
     for (int i = 0; i < m_control_points.count() - 1; ++i)
-        m_control_polygon.append(new Segment(m_control_points[i], m_control_points[i+1], true));
+        m_control_polygon.append(new Segment(m_control_points[i], m_control_points[i+1], color, true));
 }
 
 void CourbeParametrique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
