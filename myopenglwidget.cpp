@@ -95,8 +95,6 @@ void myOpenGLWidget::paintGL() {
     GLfloat hr = m_radius, wr = hr * m_ratio;
     proj_mat.frustum(-wr, wr, -hr, hr, m_near, m_far);
     cam_mat.translate(0, 0, -m_distance);
-    world_mat.rotate(m_angle_x, 1, 0, 0);
-    world_mat.rotate(m_angle_y, 0, 1, 0);
 
     drawScene();
 
@@ -106,6 +104,8 @@ void myOpenGLWidget::paintGL() {
 void myOpenGLWidget::drawScene() {
     for (GLObject *object : objects) {
         shape_mat = world_mat;
+        shape_mat.rotate(m_angle_x, 1, 0, 0);
+        shape_mat.rotate(m_angle_y, 0, 1, 0);
         setTransforms();
         object->draw(m_program, gl_funcs);
     }

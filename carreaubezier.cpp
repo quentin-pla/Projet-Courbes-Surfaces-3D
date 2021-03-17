@@ -24,9 +24,9 @@ CarreauBezier::CarreauBezier(const QVector<Point *> &points, QColor *color, cons
         m_bezier_curves.append(new CourbeBezier(curve_points, color));
     }
 
-    for (float y = 0; y < 1; y += .1f) { // < 1
-        for (float x = 0; x <= 1.1; x += .1f) { // <= 1
-            Point* point = getValue(x, y, color);
+    for (float y = 0; y < 1; y += .1f) {
+        for (float x = 0; x <= 1.1; x += .1f) {
+            Point *point = getValue(x, y, color);
             vertices.append(point->getCoords());
             colors.append(point->getColor());
             normals.append(point->getCoords());
@@ -52,6 +52,7 @@ CarreauBezier::CarreauBezier(const QVector<Point *> &points, QColor *color, cons
 }
 
 void CarreauBezier::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
+    GLObject::draw(program, glFuncs);
     if (m_drawControlPolygon) {
         for (Segment *seg : m_control_polygon) {
             Point *start = seg->getStart();
@@ -63,7 +64,6 @@ void CarreauBezier::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFunc
             end->draw(program, glFuncs);
         }
     }
-    GLObject::draw(program, glFuncs);
 }
 
 Point *CarreauBezier::getValue(float x, float y, QColor *color) const {
