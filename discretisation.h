@@ -3,13 +3,14 @@
 
 #include "point.h"
 
+/**
+ * Discrétisation
+ */
 class Discretisation {
 public:
     /**
      * Constructeur
      * @param points liste des points
-     * @param step pas
-     * @param color couleur affichage
      */
     explicit Discretisation(const QVector<Point*> &points);
 

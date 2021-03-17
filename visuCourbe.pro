@@ -30,25 +30,25 @@ SOURCES += \
     globject.cpp \
     main.cpp \
     mainwindow.cpp \
-    myopenglwidget.cpp \
+    glarea.cpp \
     segment.cpp \
     point.cpp \
     courbeparametrique.cpp \
     courbebezier.cpp \
-    carreaubezier.cpp \
+    carreaubeziercubique.cpp \
 
 HEADERS += \
     globject.h \
     mainwindow.h \
-    myopenglwidget.h \
+    glarea.h \
     segment.h \
     point.h \
     courbeparametrique.h \
     courbebezier.h \
-    carreaubezier.h \
+    carreaubeziercubique.h \
 
 FORMS += \
-        mainwindow.ui
+    mainwindow.ui
 
 DISTFILES += \
     basic.fsh \

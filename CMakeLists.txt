@@ -21,14 +21,14 @@ add_executable(visuCourbe
         resources.qrc
         main.cpp
         mainwindow.cpp
-        myopenglwidget.cpp
+        glarea.cpp
         point.cpp
         segment.cpp
         globject.cpp
         discretisation.cpp
         courbeparametrique.cpp
         courbebezier.cpp
-        carreaubezier.cpp)
+        carreaubeziercubique.cpp)
 
 include_directories(. ${OPENGL_INCLUDE_DIR} ${GLUT_INCLUDE_DIR})
 

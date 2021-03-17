@@ -3,6 +3,9 @@
 
 #include "globject.h"
 
+/**
+ * Point
+ */
 class Point : public GLObject {
 private:
     /**

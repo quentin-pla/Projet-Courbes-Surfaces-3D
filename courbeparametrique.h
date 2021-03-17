@@ -17,7 +17,9 @@ private:
 protected:
     /**
      * Constructeur
-     * @param points liste des points de la courbe
+     * @param points liste des points de contrôle
+     * @param color couleur
+     * @param drawControlPolygon afficher le polygone de contrôle
      */
     explicit CourbeParametrique(const QVector<Point*> &points, QColor* color = new QColor(Qt::white),
                                 const bool &drawControlPolygon = false);
@@ -35,7 +37,7 @@ protected:
     /**
      * Polygone de controle
      */
-    QVector<Segment*> m_control_polygon;
+    QVector<Segment *> m_control_polygon;
 
 public:
     /**
@@ -44,13 +46,9 @@ public:
      */
     void showControlPolygon(bool value);
 
+    // OVERRDIDE //
+
     void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
-
-    // GETTERS //
-
-    const QVector<Point *> &getControlPoints() const;
-
-    const QVector<Segment *> &getControlPolygon() const;
 };
 
 

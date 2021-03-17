@@ -12,14 +12,24 @@
 #include <QOpenGLShaderProgram>
 #include "globject.h"
 
-class myOpenGLWidget : public QOpenGLWidget,
-                       protected QOpenGLFunctions {
+/**
+ * Widget OpenGL
+ */
+class GLArea : public QOpenGLWidget,
+               protected QOpenGLFunctions {
 Q_OBJECT
 
 public:
-    explicit myOpenGLWidget(QWidget *parent = nullptr);
+    /**
+     * Constructeur
+     * @param parent parent
+     */
+    explicit GLArea(QWidget *parent = nullptr);
 
-    ~myOpenGLWidget() override;
+    /**
+     * Destructeur
+     */
+    ~GLArea() override;
 
 public slots:
 
@@ -27,16 +37,10 @@ signals:
 
 protected slots:
 
+    /**
+     * Lorsque le timer est écoulé
+     */
     void onTimeout();
-
-protected:
-    void initializeGL() override;
-
-    void resizeGL(int w, int h) override;
-
-    void paintGL() override;
-
-    void keyPressEvent(QKeyEvent *ev) override;
 
 private:
     /**
@@ -67,7 +71,7 @@ private:
     /**
      * Distance de la caméra
      */
-    double m_distance = 10;
+    double m_distance = 15;
 
     /**
      * Distance minimale vision scène
@@ -143,6 +147,18 @@ private:
      * Dessiner la scène
      */
     void drawScene();
+
+protected:
+
+    // OVERRIDE //
+
+    void initializeGL() override;
+
+    void resizeGL(int w, int h) override;
+
+    void paintGL() override;
+
+    void keyPressEvent(QKeyEvent *ev) override;
 
     void mouseMoveEvent(QMouseEvent *event) override;
 

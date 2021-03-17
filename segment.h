@@ -1,12 +1,14 @@
 #ifndef SEGMENT_H
 #define SEGMENT_H
 
-#include "globject.h"
 #include "point.h"
 #include "discretisation.h"
 #include <QVector>
 #include <QColor>
 
+/**
+ * Segment
+ */
 class Segment : public GLObject, public Discretisation {
 private:
     /**

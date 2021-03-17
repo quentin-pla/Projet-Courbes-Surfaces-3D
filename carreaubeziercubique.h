@@ -1,10 +1,12 @@
-#ifndef CARREAUBEZIER_H
-#define CARREAUBEZIER_H
+#ifndef CARREAUBEZIERCUBIQUE_H
+#define CARREAUBEZIERCUBIQUE_H
 
-#include "globject.h"
 #include "courbebezier.h"
 
-class CarreauBezier : public GLObject, public Discretisation {
+/**
+ * Carreau de Bézier cubique
+ */
+class CarreauBezierCubique : public GLObject, public Discretisation {
 private:
     /**
      * Dessiner le polygone de controle
@@ -14,7 +16,7 @@ private:
     /**
      * Liste des points de controle
      */
-    QVector<Point*> m_control_points;
+    QVector<Point *> m_control_points;
 
     /**
      * Liste des courbes de Bézier
@@ -29,14 +31,17 @@ private:
 public:
     /**
      * Constructeur
+     * @param points liste des points de contrôle
+     * @param color couleur
+     * @param drawControlPolygon afficher le polygone de contrôle
      */
-    explicit CarreauBezier(const QVector<Point*> &points, QColor* color = new QColor(Qt::white),
-                           const bool &drawControlPolygon = false);
+    explicit CarreauBezierCubique(const QVector<Point *> &points, QColor *color = new QColor(Qt::white),
+                                  const bool &drawControlPolygon = false);
 
     /**
      * Destructeur
      */
-    ~CarreauBezier() = default;
+    ~CarreauBezierCubique() = default;
 
     /**
      * Afficher le polygone de controle
@@ -51,5 +56,4 @@ public:
     void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
 };
 
-
-#endif //CARREAUBEZIER_H
+#endif //CARREAUBEZIERCUBIQUE_H

@@ -1,14 +1,14 @@
-#include "myopenglwidget.h"
+#include "glarea.h"
 #include "segment.h"
 #include "courbebezier.h"
-#include "carreaubezier.h"
+#include "carreaubeziercubique.h"
 #include <QDebug>
 #include <QSurfaceFormat>
 
 const QString vertexShaderFile = ":/vertex.glsl";
 const QString fragmentShaderFile = ":/fragment.glsl";
 
-myOpenGLWidget::myOpenGLWidget(QWidget *parent) : QOpenGLWidget(parent) {
+GLArea::GLArea(QWidget *parent) : QOpenGLWidget(parent) {
     QSurfaceFormat sf;
     sf.setDepthBufferSize(24);
     sf.setSamples(16);
@@ -25,13 +25,13 @@ myOpenGLWidget::myOpenGLWidget(QWidget *parent) : QOpenGLWidget(parent) {
     this->setCursor(QCursor(Qt::OpenHandCursor));
 }
 
-myOpenGLWidget::~myOpenGLWidget() {
+GLArea::~GLArea() {
     delete m_timer;
     makeCurrent();
     doneCurrent();
 }
 
-void myOpenGLWidget::initializeGL() {
+void GLArea::initializeGL() {
     initializeOpenGLFunctions();
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
@@ -49,7 +49,7 @@ void myOpenGLWidget::initializeGL() {
     }
 }
 
-void myOpenGLWidget::makeGLObjects() {
+void GLArea::makeGLObjects() {
     auto P00 = new Point(-.8, -.3, .6);
     auto P01 = new Point(-.3, 0, .6);
     auto P02 = new Point(.3, 0, .6);
@@ -70,22 +70,22 @@ void myOpenGLWidget::makeGLObjects() {
     auto P32 = new Point(.3, .4, -.6);
     auto P33 = new Point(.8, .2, -.6);
 
-    auto SB = new CarreauBezier({
-        P00, P01, P02, P03,
-        P10, P11, P12, P13,
-        P20, P21, P22, P23,
-        P30, P31, P32, P33
-    }, new QColor(Qt::green), true);
+    auto SB = new CarreauBezierCubique({
+                                               P00, P01, P02, P03,
+                                               P10, P11, P12, P13,
+                                               P20, P21, P22, P23,
+                                               P30, P31, P32, P33
+                                       }, new QColor(Qt::green), true);
 
     objects.append(SB);
 }
 
-void myOpenGLWidget::resizeGL(int w, int h) {
+void GLArea::resizeGL(int w, int h) {
     glViewport(0, 0, w, h);
     m_ratio = (double) w / h;
 }
 
-void myOpenGLWidget::paintGL() {
+void GLArea::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     gl_funcs = context()->functions();
     glClearColor(0, 0, 0, 1);
@@ -103,7 +103,7 @@ void myOpenGLWidget::paintGL() {
     m_program->release();
 }
 
-void myOpenGLWidget::drawScene() {
+void GLArea::drawScene() {
     for (GLObject *object : objects) {
         shape_mat = world_mat;
         shape_mat.rotate(m_angle_x, 1, 0, 0);
@@ -113,14 +113,14 @@ void myOpenGLWidget::drawScene() {
     }
 }
 
-void myOpenGLWidget::resetMatrix() {
+void GLArea::resetMatrix() {
     proj_mat.setToIdentity();
     world_mat.setToIdentity();
     cam_mat.setToIdentity();
     shape_mat.setToIdentity();
 }
 
-void myOpenGLWidget::setTransforms() {
+void GLArea::setTransforms() {
     QMatrix4x4 mv_mat = cam_mat * shape_mat;
     normal_mat = shape_mat.normalMatrix();
     m_program->setUniformValue("projMatrix", proj_mat);
@@ -128,11 +128,11 @@ void myOpenGLWidget::setTransforms() {
     m_program->setUniformValue("norMatrix", normal_mat);
 }
 
-void myOpenGLWidget::keyPressEvent(QKeyEvent *ev) {
+void GLArea::keyPressEvent(QKeyEvent *ev) {
     //
 }
 
-void myOpenGLWidget::mouseMoveEvent(QMouseEvent *event) {
+void GLArea::mouseMoveEvent(QMouseEvent *event) {
     if (event->buttons() & Qt::LeftButton) {
         if (last_mouse_pos != nullptr) {
             int drag_x = event->x() - last_mouse_pos->x();
@@ -152,15 +152,15 @@ void myOpenGLWidget::mouseMoveEvent(QMouseEvent *event) {
     }
 }
 
-void myOpenGLWidget::mousePressEvent(QMouseEvent *event) {
+void GLArea::mousePressEvent(QMouseEvent *event) {
     this->setCursor(QCursor(Qt::ClosedHandCursor));
 }
 
-void myOpenGLWidget::mouseReleaseEvent(QMouseEvent *event) {
+void GLArea::mouseReleaseEvent(QMouseEvent *event) {
     last_mouse_pos = nullptr;
     this->setCursor(QCursor(Qt::OpenHandCursor));
 }
 
-void myOpenGLWidget::onTimeout() {
+void GLArea::onTimeout() {
     update();
 }

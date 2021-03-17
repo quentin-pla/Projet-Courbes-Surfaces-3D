@@ -1,6 +1,7 @@
-#include "carreaubezier.h"
+#include "carreaubeziercubique.h"
 
-CarreauBezier::CarreauBezier(const QVector<Point *> &points, QColor *color, const bool &drawControlPolygon) : Discretisation(points){
+CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, QColor *color,
+                                           const bool &drawControlPolygon) : Discretisation(points) {
     m_drawControlPolygon = drawControlPolygon;
     m_control_points = points;
 
@@ -51,7 +52,7 @@ CarreauBezier::CarreauBezier(const QVector<Point *> &points, QColor *color, cons
     }
 }
 
-void CarreauBezier::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
+void CarreauBezierCubique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
     GLObject::draw(program, glFuncs);
     if (m_drawControlPolygon) {
         for (Segment *seg : m_control_polygon) {
@@ -66,22 +67,22 @@ void CarreauBezier::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFunc
     }
 }
 
-Point *CarreauBezier::getValue(float x, float y, QColor *color) const {
-    QVector<Segment*> sub_segments;
+Point *CarreauBezierCubique::getValue(float x, float y, QColor *color) const {
+    QVector<Segment *> sub_segments;
     for (int i = 0; i < m_bezier_curves.count() - 1; ++i) {
-        Point* start = m_bezier_curves[i]->getValue(x);
-        Point* end = m_bezier_curves[i+1]->getValue(x);
+        Point *start = m_bezier_curves[i]->getValue(x);
+        Point *end = m_bezier_curves[i + 1]->getValue(x);
         sub_segments.append(new Segment(start, end));
     }
     while (sub_segments.count() > 1) {
-        QVector<Segment*> child_segments;
+        QVector<Segment *> child_segments;
         for (int i = 0; i < sub_segments.count() - 1; ++i)
-            child_segments.push_back(new Segment(sub_segments[i]->getValue(y),sub_segments[i+1]->getValue(y)));
+            child_segments.push_back(new Segment(sub_segments[i]->getValue(y), sub_segments[i + 1]->getValue(y)));
         sub_segments = child_segments;
     }
     return sub_segments.first()->getValue(y, color);
 }
 
-void CarreauBezier::showControlPolygon(bool value) {
+void CarreauBezierCubique::showControlPolygon(bool value) {
     m_drawControlPolygon = value;
 }
