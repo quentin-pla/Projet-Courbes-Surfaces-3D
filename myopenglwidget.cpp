@@ -21,6 +21,8 @@ myOpenGLWidget::myOpenGLWidget(QWidget *parent) : QOpenGLWidget(parent) {
     m_timer = new QTimer(this);
     m_timer->setInterval(50);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+
+    this->setCursor(QCursor(Qt::OpenHandCursor));
 }
 
 myOpenGLWidget::~myOpenGLWidget() {
@@ -127,42 +129,37 @@ void myOpenGLWidget::setTransforms() {
 }
 
 void myOpenGLWidget::keyPressEvent(QKeyEvent *ev) {
-    switch (ev->key()) {
-        case Qt::Key_Right :
-            m_angle_y += 10;
-            if (m_angle_y >= 360) m_angle_y -= 360;
-            update();
-            break;
-        case Qt::Key_Left :
-            m_angle_y -= 10;
-            if (m_angle_y <= 0) m_angle_y += 360;
-            update();
-            break;
-        case Qt::Key_Up :
-            m_angle_x += 10;
+    //
+}
+
+void myOpenGLWidget::mouseMoveEvent(QMouseEvent *event) {
+    if (event->buttons() & Qt::LeftButton) {
+        if (last_mouse_pos != nullptr) {
+            int drag_x = event->x() - last_mouse_pos->x();
+            int drag_y = event->y() - last_mouse_pos->y();
+
+            m_angle_x += drag_y;
             if (m_angle_x >= 360) m_angle_x -= 360;
+            else if (m_angle_x <= 0) m_angle_x += 360;
+
+            m_angle_y += drag_x;
+            if (m_angle_y >= 360) m_angle_y -= 360;
+            else if (m_angle_y <= 0) m_angle_y += 360;
+
             update();
-            break;
-        case Qt::Key_Down :
-            m_angle_x -= 10;
-            if (m_angle_x <= 0) m_angle_x += 360;
-            update();
-            break;
-        case Qt::Key_A :
-            if (m_timer->isActive())
-                m_timer->stop();
-            else m_timer->start();
-            break;
+        }
+        last_mouse_pos = new QPoint(event->pos());
     }
 }
 
-//void myOpenGLWidget::keyReleaseEvent(QKeyEvent *ev) {}
+void myOpenGLWidget::mousePressEvent(QMouseEvent *event) {
+    this->setCursor(QCursor(Qt::ClosedHandCursor));
+}
 
-//void myOpenGLWidget::mousePressEvent(QMouseEvent *ev) {}
-
-//void myOpenGLWidget::mouseReleaseEvent(QMouseEvent *ev) {}
-
-//void myOpenGLWidget::mouseMoveEvent(QMouseEvent *ev) {}
+void myOpenGLWidget::mouseReleaseEvent(QMouseEvent *event) {
+    last_mouse_pos = nullptr;
+    this->setCursor(QCursor(Qt::OpenHandCursor));
+}
 
 void myOpenGLWidget::onTimeout() {
     update();
