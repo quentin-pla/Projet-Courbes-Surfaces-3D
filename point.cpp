@@ -18,6 +18,7 @@ void Point::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
 void Point::render() {
     vertices.append(m_coords);
     colors.append(m_color);
+    normals.append(m_coords);
     addVBO(GL_POINTS);
     GLObject::render();
 }

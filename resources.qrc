@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>basic.fsh</file>
-        <file>basic.vsh</file>
+        <file>vertex.glsl</file>
+        <file>fragment.glsl</file>
     </qresource>
 </RCC>

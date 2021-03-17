@@ -13,6 +13,7 @@ CourbeParametrique::CourbeParametrique(const QVector<Point *> &points, QColor* c
                 point->setColor(QColor(150,150,150));
                 vertices.append(point->getCoords());
                 colors.append(point->getColor());
+                normals.append(point->getCoords());
             }
         }
         addVBO(GL_LINES);

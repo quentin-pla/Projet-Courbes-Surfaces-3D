@@ -41,6 +41,11 @@ protected:
     QVector<QColor> colors;
 
     /**
+     * Liste des normales
+     */
+    QVector<QVector3D> normals;
+
+    /**
      * Ajouter un VBO
      * @param drawType type de dessin
      */
@@ -56,6 +61,23 @@ protected:
      */
     virtual void render();
 
+    /**
+     * Générer la normale d'un carré / rectangle
+     * @param p1 sommet 1
+     * @param p2 sommet 2
+     * @param p3 sommet 3
+     * @param p4 sommet 4
+     */
+    void generateSquareNormal(const QVector3D &p1, const QVector3D &p2, const QVector3D &p3, const QVector3D &p4);
+
+    /**
+     * Générer la normale d'un triangle
+     * @param p1 sommet 1
+     * @param p2 sommet 2
+     * @param p3 sommet 3
+     */
+    void generateTriangleNormal(const QVector3D &p1, const QVector3D &p2, const QVector3D &p3);
+
 private:
     /**
      * Liste des tampons de sommets
@@ -66,6 +88,11 @@ private:
      * Liste des tampons de couleurs
      */
     QVector<QOpenGLBuffer*> colorsBuffers;
+
+    /**
+     * Liste des tampons de normales
+     */
+    QVector<QOpenGLBuffer*> normalsBuffers;
 
     /**
      * Type de dessin

@@ -7,6 +7,7 @@ Segment::Segment(Point* a, Point* b, QColor* color, const bool &drawExtremities)
         point->setColor(*color);
         vertices.append(point->getCoords());
         colors.append(*color);
+        normals.append(point->getCoords());
     }
     addVBO(GL_LINES);
 }

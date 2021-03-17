@@ -63,7 +63,7 @@ private:
     /**
      * Distance de la caméra
      */
-    double m_distance = 20;
+    double m_distance = 10;
 
     /**
      * Distance minimale vision scène
@@ -99,6 +99,11 @@ private:
      * Matrice de transformation objets
      */
     QMatrix4x4 shape_mat;
+
+    /**
+     * Matrice des normales
+     */
+    QMatrix3x3 normal_mat;
 
     /**
      * Programme OpenGL

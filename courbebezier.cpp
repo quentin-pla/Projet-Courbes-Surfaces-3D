@@ -5,6 +5,7 @@ CourbeBezier::CourbeBezier(const QVector<Point*> &points, QColor* color,
     for (Point* point : generateStepPoints(0.05, color)) {
         vertices.push_back(point->getCoords());
         colors.push_back(point->getColor());
+        normals.push_back(point->getCoords());
     }
     addVBO(GL_LINE_STRIP);
 }

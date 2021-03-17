@@ -5,8 +5,8 @@
 #include <QDebug>
 #include <QSurfaceFormat>
 
-const QString vertexShaderFile = ":/basic.vsh";
-const QString fragmentShaderFile = ":/basic.fsh";
+const QString vertexShaderFile = ":/vertex.glsl";
+const QString fragmentShaderFile = ":/fragment.glsl";
 
 myOpenGLWidget::myOpenGLWidget(QWidget *parent) : QOpenGLWidget(parent) {
     QSurfaceFormat sf;
@@ -32,6 +32,9 @@ myOpenGLWidget::~myOpenGLWidget() {
 void myOpenGLWidget::initializeGL() {
     initializeOpenGLFunctions();
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glClearColor(0, 0, 0, 1);
 
     makeGLObjects();
 
@@ -70,7 +73,7 @@ void myOpenGLWidget::makeGLObjects() {
         P10, P11, P12, P13,
         P20, P21, P22, P23,
         P30, P31, P32, P33
-    }, new QColor(Qt::white), true);
+    }, new QColor(Qt::green), true);
 
     objects.append(SB);
 }
@@ -88,6 +91,7 @@ void myOpenGLWidget::paintGL() {
     m_program->bind();
 
     resetMatrix();
+
     GLfloat hr = m_radius, wr = hr * m_ratio;
     proj_mat.frustum(-wr, wr, -hr, hr, m_near, m_far);
     cam_mat.translate(0, 0, -m_distance);
@@ -116,8 +120,10 @@ void myOpenGLWidget::resetMatrix() {
 
 void myOpenGLWidget::setTransforms() {
     QMatrix4x4 mv_mat = cam_mat * shape_mat;
+    normal_mat = shape_mat.normalMatrix();
     m_program->setUniformValue("projMatrix", proj_mat);
     m_program->setUniformValue("mvMatrix", mv_mat);
+    m_program->setUniformValue("norMatrix", normal_mat);
 }
 
 void myOpenGLWidget::keyPressEvent(QKeyEvent *ev) {
