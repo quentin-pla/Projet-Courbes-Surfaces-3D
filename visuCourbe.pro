@@ -28,18 +28,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     globject.cpp \
-        main.cpp \
-        mainwindow.cpp \
+    main.cpp \
+    mainwindow.cpp \
     myopenglwidget.cpp \
     segment.cpp \
-    point.cpp
+    point.cpp \
+    courbeparametrique.cpp \
+    courbebezier.cpp \
+    carreaubezier.cpp \
 
 HEADERS += \
     globject.h \
-        mainwindow.h \
+    mainwindow.h \
     myopenglwidget.h \
     segment.h \
-    point.h
+    point.h \
+    courbeparametrique.h \
+    courbebezier.h \
+    carreaubezier.h \
 
 FORMS += \
         mainwindow.ui

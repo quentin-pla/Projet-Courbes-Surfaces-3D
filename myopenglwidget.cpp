@@ -1,6 +1,7 @@
 #include "myopenglwidget.h"
 #include "segment.h"
 #include "courbebezier.h"
+#include "carreaubezier.h"
 #include <QDebug>
 #include <QSurfaceFormat>
 
@@ -44,14 +45,34 @@ void myOpenGLWidget::initializeGL() {
 }
 
 void myOpenGLWidget::makeGLObjects() {
-    auto A = new Point(-.5, 0, 0);
-    auto B = new Point(.5, 0, 0);
-    auto C = new Point(.8, 1, 0);
-    auto D = new Point(0, 1.5, 0);
+    auto P00 = new Point(-.8, -.3, .6);
+    auto P01 = new Point(-.3, 0, .6);
+    auto P02 = new Point(.3, 0, .6);
+    auto P03 = new Point(.8, -.3, .6);
 
-    auto CB = new CourbeBezier({A, B, C, D}, new QColor(Qt::red), true);
+    auto P10 = new Point(-.8, -.3, 0);
+    auto P11 = new Point(-.3, 0, 0);
+    auto P12 = new Point(.3, 0, 0);
+    auto P13 = new Point(.8, -.3, 0);
 
-    objects.append(CB);
+    auto P20 = new Point(-.8, -.3, -.6);
+    auto P21 = new Point(-.3, 0, -.6);
+    auto P22 = new Point(.3, 0, -.6);
+    auto P23 = new Point(.8, -.3, -.6);
+
+    auto P30 = new Point(-.8, .2, -.6);
+    auto P31 = new Point(-.3, .4, -.6);
+    auto P32 = new Point(.3, .4, -.6);
+    auto P33 = new Point(.8, .2, -.6);
+
+    auto SB = new CarreauBezier({
+        P00, P01, P02, P03,
+        P10, P11, P12, P13,
+        P20, P21, P22, P23,
+        P30, P31, P32, P33
+    }, new QColor(Qt::white), true);
+
+    objects.append(SB);
 }
 
 void myOpenGLWidget::resizeGL(int w, int h) {
@@ -70,7 +91,8 @@ void myOpenGLWidget::paintGL() {
     GLfloat hr = m_radius, wr = hr * m_ratio;
     proj_mat.frustum(-wr, wr, -hr, hr, m_near, m_far);
     cam_mat.translate(0, 0, -m_distance);
-    world_mat.rotate(m_angle, 0, 1, 0);
+    world_mat.rotate(m_angle_x, 1, 0, 0);
+    world_mat.rotate(m_angle_y, 0, 1, 0);
 
     drawScene();
 
@@ -93,24 +115,37 @@ void myOpenGLWidget::resetMatrix() {
 }
 
 void myOpenGLWidget::setTransforms() {
-    QMatrix4x4 mv_mat = cam_mat*shape_mat;
+    QMatrix4x4 mv_mat = cam_mat * shape_mat;
     m_program->setUniformValue("projMatrix", proj_mat);
     m_program->setUniformValue("mvMatrix", mv_mat);
 }
 
 void myOpenGLWidget::keyPressEvent(QKeyEvent *ev) {
     switch (ev->key()) {
-        case Qt::Key_Z :
-            m_angle += 10;
-            if (m_angle >= 360) m_angle -= 360;
+        case Qt::Key_Right :
+            m_angle_y += 10;
+            if (m_angle_y >= 360) m_angle_y -= 360;
+            update();
+            break;
+        case Qt::Key_Left :
+            m_angle_y -= 10;
+            if (m_angle_y <= 0) m_angle_y += 360;
+            update();
+            break;
+        case Qt::Key_Up :
+            m_angle_x += 10;
+            if (m_angle_x >= 360) m_angle_x -= 360;
+            update();
+            break;
+        case Qt::Key_Down :
+            m_angle_x -= 10;
+            if (m_angle_x <= 0) m_angle_x += 360;
             update();
             break;
         case Qt::Key_A :
             if (m_timer->isActive())
                 m_timer->stop();
             else m_timer->start();
-            break;
-        case Qt::Key_R :
             break;
     }
 }

@@ -26,7 +26,7 @@ public:
      * @param color couleur
      * @param size taille
      */
-    explicit Point(QColor* color = new QColor(Qt::white), float size = 20.0f);
+    explicit Point(QColor* color = new QColor(Qt::white), float size = 15.0f);
 
     /**
      * Constructeur surchargé
@@ -36,7 +36,7 @@ public:
      * @param color couleur
      * @param size taille du point
      */
-    Point(float x, float y, float z, QColor* color = new QColor(Qt::white), float size = 20.0f);
+    Point(float x, float y, float z, QColor* color = new QColor(Qt::white), float size = 15.0f);
 
     /**
      * Destructeur

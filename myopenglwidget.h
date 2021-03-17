@@ -36,9 +36,14 @@ protected:
 
 private:
     /**
+     * Angle de vue sur l'axe X
+     */
+    double m_angle_x = 0;
+
+    /**
      * Angle de vue sur l'axe Y
      */
-	double m_angle = 0;
+	double m_angle_y = 0;
 
 	/**
 	 * Timer

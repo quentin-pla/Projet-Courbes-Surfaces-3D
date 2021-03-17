@@ -26,7 +26,9 @@ add_executable(visuCourbe
         segment.cpp
         globject.cpp
         discretisation.cpp
-        courbeparametrique.cpp courbebezier.cpp courbebezier.h)
+        courbeparametrique.cpp
+        courbebezier.cpp
+        carreaubezier.cpp)
 
 include_directories(. ${OPENGL_INCLUDE_DIR} ${GLUT_INCLUDE_DIR})
 
