@@ -45,6 +45,12 @@ public:
     void showControlPolygon(bool value);
 
     void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
+
+    // GETTERS //
+
+    const QVector<Point *> &getControlPoints() const;
+
+    const QVector<Segment *> &getControlPolygon() const;
 };
 
 

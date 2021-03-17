@@ -43,11 +43,6 @@ public:
      */
     void setEnd(Point*);
 
-    /**
-     * Obtenir un point à une position spécifique
-     * @param pos position
-     * @return point
-     */
     Point* getValue(float pos, QColor* color = new QColor(Qt::white)) const override;
 
     /**

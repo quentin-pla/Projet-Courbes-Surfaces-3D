@@ -27,11 +27,45 @@ public:
     virtual Point* getValue(float pos, QColor* color) const { return nullptr; };
 
     /**
+     * Obtenir un point à une certaine coordonnée
+     * @param x coordonnée X
+     * @param y coordonnée Y
+     * @param color couleur
+     * @return point
+     */
+    virtual Point* getValue(float x, float y, QColor* color) const { return nullptr; };
+
+    /**
      * Obtenir la liste des points selon un pas spécifique
      * @param step pas
+     * @param color couleur
+     * @param extrem_points obtenir les points extrêmes
      * @return liste de points
      */
-    QVector<Point*> generateStepPoints(float step, QColor* color = new QColor(Qt::white)) const;
+    QVector<Point*> generateStepPoints(float step, QColor* color = new QColor(Qt::white),
+                                       bool extrem_points = true) const;
+
+    /**
+     * Obtenir la liste des points d'une ligne basée sur un axe X d'une surface
+     * @param x coordonnée X
+     * @param step pas
+     * @param color couleur
+     * @param extrem_points points extrêmes
+     * @return liste de points
+     */
+    QVector<Point*> generateXLinePoints(float x, float step, QColor *color = new QColor(Qt::white),
+                                        bool extrem_points = true) const;
+
+    /**
+     * Obtenir la liste des points d'une ligne basée sur un axe Y d'une surface
+     * @param y coordonnée Y
+     * @param step pas
+     * @param color couleur
+     * @param extrem_points points extrêmes
+     * @return liste de points
+     */
+    QVector<Point*> generateYLinePoints(float y, float step, QColor *color = new QColor(Qt::white),
+                                        bool extrem_points = true) const;
 
     /**
      * Longueur totale

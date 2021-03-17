@@ -38,3 +38,11 @@ void CourbeParametrique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *g
 void CourbeParametrique::showControlPolygon(bool value) {
     m_drawControlPolygon = value;
 }
+
+const QVector<Point *> &CourbeParametrique::getControlPoints() const {
+    return m_control_points;
+}
+
+const QVector<Segment *> &CourbeParametrique::getControlPolygon() const {
+    return m_control_polygon;
+}

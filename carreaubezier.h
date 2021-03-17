@@ -4,7 +4,7 @@
 #include "globject.h"
 #include "courbebezier.h"
 
-class CarreauBezier : public GLObject {
+class CarreauBezier : public GLObject, public Discretisation {
 private:
     /**
      * Dessiner le polygone de controle
@@ -43,6 +43,10 @@ public:
      * @param value valeur
      */
     void showControlPolygon(bool value);
+
+    // OVERRIDE //
+
+    Point* getValue(float x, float y, QColor* color = new QColor(Qt::white)) const override;
 
     void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
 };

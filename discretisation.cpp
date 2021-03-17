@@ -4,10 +4,36 @@ Discretisation::Discretisation(const QVector<Point*> &points) {
     object_points = points;
 }
 
-QVector<Point*> Discretisation::generateStepPoints(float step, QColor *color) const {
+QVector<Point*> Discretisation::generateStepPoints(float step, QColor *color, bool extrem_points) const {
     QVector<Point*> points;
-    for (float i = 0; i < 1.0f + step; i += step)
+    float start = extrem_points ? 0 : step;
+    float end = extrem_points ? 1.0f + step : 1.0f - step;
+    for (float i = start; i < end; i += step) {
+        if (i > 1.0f) i = 1.0f;
         points.push_back(getValue(i, color));
+    }
+    return points;
+}
+
+QVector<Point*> Discretisation::generateXLinePoints(float x, float step, QColor *color, bool extrem_points) const {
+    QVector<Point*> points;
+    float start = extrem_points ? 0 : step;
+    float end = extrem_points ? 1.0f + step : 1.0f - step;
+    for (float i = start; i < end; i += step) {
+        if (i > 1.0f) i = 1.0f;
+        points.push_back(getValue(x, i, color));
+    }
+    return points;
+}
+
+QVector<Point*> Discretisation::generateYLinePoints(float y, float step, QColor *color, bool extrem_points) const {
+    QVector<Point*> points;
+    float start = extrem_points ? 0 : step;
+    float end = extrem_points ? 1.0f + step : 1.0f - step;
+    for (float i = start; i < end; i += step) {
+        if (i > 1.0f) i = 1.0f;
+        points.push_back(getValue(i, y, color));
+    }
     return points;
 }
 
