@@ -36,6 +36,8 @@ SOURCES += \
     courbeparametrique.cpp \
     courbebezier.cpp \
     carreaubeziercubique.cpp \
+    polyedre.cpp \
+    polygon.cpp \
 
 HEADERS += \
     globject.h \
@@ -46,13 +48,11 @@ HEADERS += \
     courbeparametrique.h \
     courbebezier.h \
     carreaubeziercubique.h \
+    polyedre.h \
+    polygon.h \
 
 FORMS += \
     mainwindow.ui
-
-DISTFILES += \
-    basic.fsh \
-    basic.vsh
 
 RESOURCES += \
     resources.qrc

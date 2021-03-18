@@ -28,7 +28,9 @@ add_executable(visuCourbe
         discretisation.cpp
         courbeparametrique.cpp
         courbebezier.cpp
-        carreaubeziercubique.cpp)
+        carreaubeziercubique.cpp
+        polyedre.cpp
+        polygon.cpp)
 
 include_directories(. ${OPENGL_INCLUDE_DIR} ${GLUT_INCLUDE_DIR})
 
