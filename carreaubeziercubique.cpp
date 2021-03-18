@@ -6,18 +6,6 @@ CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, const
     m_control_points = points;
     m_color = color;
 
-    // Polygone de controle
-    for (int i = 0; i < m_control_points.count() - 1; i += 4) {
-        m_control_polygon.append(new Segment(m_control_points[i], m_control_points[i + 1], m_color, true));
-        m_control_polygon.append(new Segment(m_control_points[i + 1], m_control_points[i + 2], m_color, true));
-        m_control_polygon.append(new Segment(m_control_points[i + 2], m_control_points[i + 3], m_color, true));
-    }
-    for (int i = 0; i < 4; ++i) {
-        m_control_polygon.append(new Segment(m_control_points[i], m_control_points[i + 4], m_color, true));
-        m_control_polygon.append(new Segment(m_control_points[i + 4], m_control_points[i + 8], m_color, true));
-        m_control_polygon.append(new Segment(m_control_points[i + 8], m_control_points[i + 12], m_color, true));
-    }
-
     // Courbes de bézier utilisées pour récupérer la valeur d'un point
     for (int i = 0; i < m_control_points.count(); i += 4) {
         QVector<Point *> curve_points;
@@ -30,6 +18,10 @@ CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, const
 void CarreauBezierCubique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
                                 const QVector<unsigned char> &drawTypes_override) {
     GLObject::draw(program, glFuncs);
+    if (m_drawControlPolygon) {
+        for (Segment *segment : m_control_segments)
+            segment->draw(program, glFuncs);
+    }
 }
 
 Point *CarreauBezierCubique::getValue(float x, float y, const QColor &color) const {
@@ -66,6 +58,21 @@ void CarreauBezierCubique::render() {
             m_normals.append(point->getCoords());
         }
         addVBO(GL_QUAD_STRIP);
+    }
+
+    // Génération des segments de contrôle
+
+    QColor segments_color(150, 150, 150);
+
+    for (int i = 0; i < m_control_points.count() - 1; i += 4) {
+        m_control_segments.append(new Segment(m_control_points[i], m_control_points[i + 1], segments_color, true));
+        m_control_segments.append(new Segment(m_control_points[i + 1], m_control_points[i + 2], segments_color, true));
+        m_control_segments.append(new Segment(m_control_points[i + 2], m_control_points[i + 3], segments_color, true));
+    }
+    for (int i = 0; i < 4; ++i) {
+        m_control_segments.append(new Segment(m_control_points[i], m_control_points[i + 4], segments_color, true));
+        m_control_segments.append(new Segment(m_control_points[i + 4], m_control_points[i + 8], segments_color, true));
+        m_control_segments.append(new Segment(m_control_points[i + 8], m_control_points[i + 12], segments_color, true));
     }
 
     GLObject::render();

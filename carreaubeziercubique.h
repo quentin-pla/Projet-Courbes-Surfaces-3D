@@ -15,24 +15,19 @@ private:
     bool m_drawControlPolygon;
 
     /**
-     * Liste des points de controle
+     * Points de controle
      */
     QVector<Point *> m_control_points;
 
     /**
-     * Liste des courbes de Bézier
+     * Courbes de Bézier
      */
     QVector<CourbeBezier *> m_bezier_curves;
 
     /**
-     * Polygone de controle
+     * Segments de contrôle
      */
-    QVector<Segment *> m_control_polygon;
-
-    /**
-     * Polyèdre de contrôle
-     */
-    QVector<Polygon *> control_polyhedra;
+    QVector<Segment *> m_control_segments;
 
     /**
      * Couleur
