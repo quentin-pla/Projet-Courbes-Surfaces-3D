@@ -57,12 +57,8 @@ public:
      * @param drawControlPolygon afficher le polygone de contrôle
      */
     explicit CarreauBezierCubique(const QVector<Point *> &points, const QColor &color = Qt::white,
-                                  const bool &drawControlPolygon = false);
-
-    /**
-     * Destructeur
-     */
-    ~CarreauBezierCubique() = default;
+                                  const bool &drawControlPolygon = false, const unsigned char &drawMode = GL_TRIANGLES,
+                                  const float &discretisationStep = .05f);
 
     /**
      * Afficher le polygone de controle

@@ -25,11 +25,6 @@ protected:
                                 const bool &drawControlPolygon = false);
 
     /**
-     * Destructeur
-     */
-    ~CourbeParametrique() = default;
-
-    /**
      * Liste des points de controle
      */
     QVector<Point *> m_control_points;

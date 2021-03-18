@@ -17,11 +17,6 @@ public:
     explicit CourbeBezier(const QVector<Point *> &points, const QColor &color = Qt::white,
                           const bool &drawControlPolygon = false);
 
-    /**
-     * Destructeur
-     */
-    ~CourbeBezier() = default;
-
     // OVERRIDE //
 
     void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,

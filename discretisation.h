@@ -15,11 +15,6 @@ public:
     explicit Discretisation(const QVector<Point*> &points);
 
     /**
-     * Destructeur
-     */
-    ~Discretisation() = default;
-
-    /**
      * Obtenir un point à une certaine position
      * @param pos position
      * @param color couleur

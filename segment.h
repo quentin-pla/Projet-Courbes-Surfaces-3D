@@ -34,11 +34,6 @@ public:
     Segment(Point *start, Point *end, const QColor &color = Qt::white, const bool &drawExtremities = false);
 
     /**
-     * Destructeur
-     */
-    ~Segment() = default;
-
-    /**
      * Définir le point de départ
      */
     void setStart(Point*);

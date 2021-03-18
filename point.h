@@ -41,11 +41,6 @@ public:
      */
     Point(float x, float y, float z, const QColor &color = Qt::white, float size = 15.0f);
 
-    /**
-     * Destructeur
-     */
-    ~Point() = default;
-
     // OVERRIDE //
 
     void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
