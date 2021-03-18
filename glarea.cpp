@@ -3,10 +3,6 @@
 #include "courbebezier.h"
 #include "carreaubeziercubique.h"
 #include <QDebug>
-#include <QSurfaceFormat>
-
-const QString vertexShaderFile = ":/vertex.glsl";
-const QString fragmentShaderFile = ":/fragment.glsl";
 
 GLArea::GLArea(QWidget *parent) : QOpenGLWidget(parent) {
     QSurfaceFormat sf;
@@ -41,8 +37,8 @@ void GLArea::initializeGL() {
     makeGLObjects();
 
     m_program = new QOpenGLShaderProgram(this);
-    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, vertexShaderFile);
-    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, fragmentShaderFile);
+    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vertex.glsl");
+    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fragment.glsl");
     if (!m_program->link()) {
         qWarning("Failed to compile and link shader program:");
         qWarning() << m_program->log();
@@ -75,14 +71,21 @@ void GLArea::makeGLObjects() {
                                                P10, P11, P12, P13,
                                                P20, P21, P22, P23,
                                                P30, P31, P32, P33
-                                       }, new QColor(Qt::green), true);
+                                       }, Qt::green);
 
-    objects.append(SB);
+    bezier_tile = SB;
+
+    gl_objects.append(SB);
+
+    m_surface_point = new Point(Qt::red, 20);
+    m_surface_point->render();
+    m_surface_point->setCoords(bezier_tile->getValue(m_u_value, m_v_value)->getCoords());
+    emit updateUIPointCoords(m_surface_point);
 }
 
 void GLArea::resizeGL(int w, int h) {
     glViewport(0, 0, w, h);
-    m_ratio = (double) w / h;
+    m_ratio = w / h;
 }
 
 void GLArea::paintGL() {
@@ -104,12 +107,20 @@ void GLArea::paintGL() {
 }
 
 void GLArea::drawScene() {
-    for (GLObject *object : objects) {
+    for (GLObject *object : gl_objects) {
         shape_mat = world_mat;
         shape_mat.rotate(m_angle_x, 1, 0, 0);
         shape_mat.rotate(m_angle_y, 0, 1, 0);
         setTransforms();
         object->draw(m_program, gl_funcs);
+    }
+    if (m_surface_point != nullptr && m_show_point) {
+        shape_mat = world_mat;
+        shape_mat.rotate(m_angle_x, 1, 0, 0);
+        shape_mat.rotate(m_angle_y, 0, 1, 0);
+        shape_mat.translate(m_surface_point->getCoords());
+        setTransforms();
+        m_surface_point->draw(m_program, gl_funcs);
     }
 }
 
@@ -137,15 +148,8 @@ void GLArea::mouseMoveEvent(QMouseEvent *event) {
         if (last_mouse_pos != nullptr) {
             int drag_x = event->x() - last_mouse_pos->x();
             int drag_y = event->y() - last_mouse_pos->y();
-
-            m_angle_x += drag_y;
-            if (m_angle_x >= 360) m_angle_x -= 360;
-            else if (m_angle_x <= 0) m_angle_x += 360;
-
-            m_angle_y += drag_x;
-            if (m_angle_y >= 360) m_angle_y -= 360;
-            else if (m_angle_y <= 0) m_angle_y += 360;
-
+            setXAngle(drag_y);
+            setYAngle(drag_x);
             update();
         }
         last_mouse_pos = new QPoint(event->pos());
@@ -163,4 +167,50 @@ void GLArea::mouseReleaseEvent(QMouseEvent *event) {
 
 void GLArea::onTimeout() {
     update();
+}
+
+void GLArea::setXAngle(int value) {
+    m_angle_x += (float) value;
+    if (m_angle_x >= 360) m_angle_x -= 360;
+    else if (m_angle_x <= 0) m_angle_x += 360;
+}
+
+void GLArea::setYAngle(int value) {
+    m_angle_y += (float) value;
+    if (m_angle_y >= 360) m_angle_y -= 360;
+    else if (m_angle_y <= 0) m_angle_y += 360;
+}
+
+void GLArea::onShowControlPoly(bool value) {
+    m_show_control_poly = value;
+    bezier_tile->showControlPolygon(value);
+    update();
+}
+
+void GLArea::onShowPoint(bool value) {
+    m_show_point = value;
+    update();
+}
+
+void GLArea::onUpdateDiscretisation(int value) {
+    m_discretisation = (float) value;
+    update();
+}
+
+void GLArea::onUpdateUPointCoord(double u) {
+    m_u_value = (float) u;
+    m_surface_point->setCoords(bezier_tile->getValue(m_u_value, m_v_value)->getCoords());
+    emit updateUIPointCoords(m_surface_point);
+    update();
+}
+
+void GLArea::onUpdateVPointCoord(double v) {
+    m_v_value = (float) v;
+    m_surface_point->setCoords(bezier_tile->getValue(m_u_value, m_v_value)->getCoords());
+    emit updateUIPointCoords(m_surface_point);
+    update();
+}
+
+void GLArea::onUpdateSurfaceView(const QString &value) {
+    //
 }

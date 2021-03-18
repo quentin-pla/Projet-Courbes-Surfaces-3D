@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "point.h"
 
 namespace Ui {
     class MainWindow;
@@ -24,6 +25,13 @@ public:
      * Destructeur
      */
     ~MainWindow() override;
+
+protected slots:
+
+    /**
+     * Mettre à jour les coordonnées du point de l'UI
+     */
+    void onUpdateUIPointCoords(Point *point);
 
 private:
     /**

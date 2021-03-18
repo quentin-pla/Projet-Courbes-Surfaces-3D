@@ -11,6 +11,8 @@
 #include <QOpenGLBuffer>
 #include <QOpenGLShaderProgram>
 #include "globject.h"
+#include "point.h"
+#include "carreaubeziercubique.h"
 
 /**
  * Widget OpenGL
@@ -31,9 +33,13 @@ public:
      */
     ~GLArea() override;
 
-public slots:
-
 signals:
+
+    /**
+     * Mettre à jour les coordonnées du point dans l'UI
+     * @param point nouveau point
+     */
+    void updateUIPointCoords(Point *point);
 
 protected slots:
 
@@ -42,16 +48,66 @@ protected slots:
      */
     void onTimeout();
 
+    /**
+     * Affichage du polyèdre de contrôle
+     * @param value valeur
+     */
+    void onShowControlPoly(bool value);
+
+    /**
+     * Afficher le point sur la surface
+     * @param value valeur
+     */
+    void onShowPoint(bool value);
+
+    /**
+     * Lorsque la coordonnée U du point a été mise à jour
+     * @param u U
+     */
+    void onUpdateUPointCoord(double u);
+
+    /**
+     * Lorsque la coordonnée V du point a été mise à jour
+     * @param v V
+     */
+    void onUpdateVPointCoord(double v);
+
+    /**
+     * Lorsque la valeur de la discrétisation est mise à jour
+     * @param value valeur
+     */
+    void onUpdateDiscretisation(int value);
+
+    /**
+     * Lorsque la valeur de l'affichage de la surface est modifiée
+     * @param value valeur
+     */
+    void onUpdateSurfaceView(const QString &);
+
+    /**
+     * Définir la valeur de l'angle de vue X
+     * @param value valeur
+     */
+    void setXAngle(int value);
+
+    /**
+     * Définir la valeur de l'angle de vue Y
+     * @param value
+     */
+    void setYAngle(int value);
+
 private:
+    // PARAMÈTRES SCÈNE //
+
     /**
      * Angle de vue sur l'axe X
      */
-    double m_angle_x = 0;
+    float m_angle_x = 0;
 
     /**
      * Angle de vue sur l'axe Y
      */
-    double m_angle_y = 0;
+    float m_angle_y = 0;
 
     /**
      * Timer
@@ -61,27 +117,27 @@ private:
     /**
      * Ratio
      */
-    double m_ratio = 1;
+    float m_ratio = 1;
 
     /**
      * Radius
      */
-    double m_radius = 0.1;
+    float m_radius = 0.1;
 
     /**
      * Distance de la caméra
      */
-    double m_distance = 15;
+    float m_distance = 15;
 
     /**
      * Distance minimale vision scène
      */
-    double m_near = 1;
+    float m_near = 1;
 
     /**
      * Distance maximale vision scène
      */
-    double m_far = 100;
+    float m_far = 100;
 
     /**
      * Dernière position enregistrée de la souris
@@ -91,7 +147,12 @@ private:
     /**
      * Objets OpenGL
      */
-    QVector<GLObject *> objects;
+    QVector<GLObject *> gl_objects;
+
+    /**
+     * Carreau de bézier cubique
+     */
+    CarreauBezierCubique *bezier_tile;
 
     /**
      * Matrice de projection
@@ -147,6 +208,32 @@ private:
      * Dessiner la scène
      */
     void drawScene();
+
+    // PARAMÈTRES INTERFACE GRAPHIQUE //
+
+    /**
+     * Affichage du polyèdre de contrôle
+     */
+    bool m_show_control_poly = false;
+
+    /**
+     * Affichage du point sur la surface
+     */
+    bool m_show_point = false;
+
+    /**
+     * Discrétisation de la surface
+     */
+    float m_discretisation = 0.1f;
+
+    /**
+     * Point affiché sur la surface
+     */
+    Point *m_surface_point = nullptr;
+
+    float m_u_value;
+
+    float m_v_value;
 
 protected:
 

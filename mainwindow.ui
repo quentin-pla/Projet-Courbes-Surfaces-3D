@@ -7,270 +7,314 @@
   </property>
   <property name="geometry">
    <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>753</width>
-       <height>525</height>
+    <x>0</x>
+    <y>0</y>
+    <width>753</width>
+    <height>525</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>TP M1GIG</string>
   </property>
-     <widget class="QWidget" name="centralWidget">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-                 <layout class="QVBoxLayout" name="options">
-                     <item>
-                         <widget class="QLabel" name="view_label">
-                             <property name="text">
-                                 <string>Affichage de la surface</string>
-                             </property>
-                         </widget>
-                     </item>
-                     <item>
-                         <widget class="QComboBox" name="views_combo">
-                             <item>
-                                 <property name="text">
-                                     <string>Pleine</string>
-                                 </property>
-                             </item>
-                             <item>
-                                 <property name="text">
-                                     <string>Triangles</string>
-                                 </property>
-                             </item>
-                             <item>
-                                 <property name="text">
-                                     <string>Filaire</string>
-                                 </property>
-                             </item>
-                         </widget>
-                     </item>
-                     <item>
-                         <spacer name="verticalSpacer">
-                             <property name="orientation">
-                                 <enum>Qt::Vertical</enum>
-                             </property>
-                             <property name="sizeType">
-                                 <enum>QSizePolicy::Fixed</enum>
-                             </property>
-                             <property name="sizeHint" stdset="0">
-                                 <size>
-                                     <width>10</width>
-                                     <height>20</height>
-                                 </size>
-                             </property>
-                         </spacer>
-                     </item>
-                     <item>
-                         <widget class="QLabel" name="interval_param_label">
-                             <property name="text">
-                                 <string>Intervalle paramétrique</string>
-                             </property>
-                         </widget>
-                     </item>
-                     <item>
-                         <layout class="QHBoxLayout" name="interval_param_content">
-                             <item>
-                                 <widget class="QLabel" name="u_label">
-                                     <property name="maximumSize">
-                                         <size>
-                                             <width>20</width>
-                                             <height>16777215</height>
-                                         </size>
-                                     </property>
-                                     <property name="text">
-                                         <string>U</string>
-                                     </property>
-                                 </widget>
-                             </item>
-                             <item>
-                                 <widget class="QDoubleSpinBox" name="u_spin">
-                                     <property name="maximum">
-                                         <double>1.000000000000000</double>
-                                     </property>
-                                     <property name="singleStep">
-                                         <double>0.100000000000000</double>
-                                     </property>
-                                 </widget>
-                             </item>
-                             <item>
-                                 <widget class="QLabel" name="v_label">
-                                     <property name="maximumSize">
-                                         <size>
-                                             <width>20</width>
-                                             <height>16777215</height>
-                                         </size>
-                                     </property>
-                                     <property name="text">
-                                         <string>V</string>
-                                     </property>
-                                 </widget>
-                             </item>
-                             <item>
-                                 <widget class="QDoubleSpinBox" name="v_spin">
-                                     <property name="maximum">
-                                         <double>1.000000000000000</double>
-                                     </property>
-                                     <property name="singleStep">
-                                         <double>0.100000000000000</double>
-                                     </property>
-                                 </widget>
-                             </item>
-                         </layout>
-                     </item>
-                     <item>
-                         <widget class="QLabel" name="point_coords_label">
-                             <property name="text">
-                                 <string>Coordonnées du point</string>
-                             </property>
-                         </widget>
-                     </item>
-                     <item>
-                         <layout class="QHBoxLayout" name="point_coords_content">
-                             <item>
-                                 <widget class="QLabel" name="x_label">
-                                     <property name="text">
-                                         <string>X</string>
-                                     </property>
-                                 </widget>
-                             </item>
-                             <item>
-                                 <widget class="QLineEdit" name="x_value">
-                                     <property name="maxLength">
-                                         <number>20</number>
-                                     </property>
-                                     <property name="readOnly">
-                                         <bool>true</bool>
-                                     </property>
-                                 </widget>
-                             </item>
-                             <item>
-                                 <widget class="QLabel" name="y_label">
-                                     <property name="text">
-                                         <string>Y</string>
-                                     </property>
-                                 </widget>
-                             </item>
-                             <item>
-                                 <widget class="QLineEdit" name="y_value">
-                                     <property name="maxLength">
-                                         <number>20</number>
-                                     </property>
-                                     <property name="readOnly">
-                                         <bool>true</bool>
-                                     </property>
-                                 </widget>
-                             </item>
-                             <item>
-                                 <widget class="QLabel" name="z_label">
-                                     <property name="text">
-                                         <string>Z</string>
-                                     </property>
-                                 </widget>
-                             </item>
-                             <item>
-                                 <widget class="QLineEdit" name="z_value">
-                                     <property name="maxLength">
-                                         <number>20</number>
-                                     </property>
-                                     <property name="readOnly">
-                                         <bool>true</bool>
-                                     </property>
-                                 </widget>
-                             </item>
-                         </layout>
-                     </item>
-                     <item>
-                         <widget class="QPushButton" name="point_show_btn">
-                             <property name="text">
-                                 <string>Afficher le point</string>
-                             </property>
-                         </widget>
-                     </item>
-                     <item>
-                         <spacer name="verticalSpacer_2">
-                             <property name="orientation">
-                                 <enum>Qt::Vertical</enum>
-                             </property>
-                             <property name="sizeType">
-                                 <enum>QSizePolicy::Fixed</enum>
-                             </property>
-                             <property name="sizeHint" stdset="0">
-                                 <size>
-                                     <width>20</width>
-                                     <height>20</height>
-                                 </size>
-                             </property>
-                         </spacer>
-                     </item>
-                     <item>
-                         <widget class="QLabel" name="discretisation_label">
-                             <property name="text">
-                                 <string>Pas homogène de discrétisation</string>
-                             </property>
-                         </widget>
-                     </item>
-                     <item>
-                         <widget class="QSlider" name="discretisation_slider">
-                             <property name="minimum">
-                                 <number>1</number>
-                             </property>
-                             <property name="maximum">
-                                 <number>10</number>
-                             </property>
-                             <property name="orientation">
-                                 <enum>Qt::Horizontal</enum>
-                             </property>
-                         </widget>
-                     </item>
-                     <item>
-                         <widget class="QPushButton" name="polygon_show_btn">
-                             <property name="text">
-                                 <string>Afficher polyèdre de contrôle</string>
-                             </property>
-                         </widget>
-                     </item>
-                     <item>
-                         <spacer name="verticalSpacer_3">
-                             <property name="orientation">
-                                 <enum>Qt::Vertical</enum>
-                             </property>
-                             <property name="sizeHint" stdset="0">
-                                 <size>
-                                     <width>20</width>
-                                     <height>40</height>
-                                 </size>
-                             </property>
-                         </spacer>
-                     </item>
-                 </layout>
-             </item>
-             <item>
-                 <widget class="GLArea" name="openGLWidget">
-                     <property name="minimumSize">
-                         <size>
-                             <width>500</width>
-                             <height>500</height>
-                         </size>
-                     </property>
-                     <property name="maximumSize">
-                         <size>
-                             <width>500</width>
-                             <height>500</height>
-                         </size>
-                     </property>
-                 </widget>
-             </item>
-         </layout>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="options">
+      <item>
+       <widget class="QLabel" name="view_label">
+        <property name="text">
+         <string>Affichage de la surface</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="views_combo">
+        <item>
+         <property name="text">
+          <string>Pleine</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Triangles</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Filaire</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>10</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="interval_param_label">
+        <property name="text">
+         <string>Intervalle paramétrique</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="interval_param_content">
+        <item>
+         <widget class="QLabel" name="u_label">
+          <property name="maximumSize">
+           <size>
+            <width>20</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>U</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="u_spin">
+          <property name="maximum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.050000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="v_label">
+          <property name="maximumSize">
+           <size>
+            <width>20</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>V</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="v_spin">
+          <property name="maximum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.050000000000000</double>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="point_coords_label">
+        <property name="text">
+         <string>Coordonnées du point</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="point_coords_content">
+        <item>
+         <widget class="QLabel" name="x_label">
+          <property name="text">
+           <string>X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="x_value">
+          <property name="maxLength">
+           <number>20</number>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="y_label">
+          <property name="text">
+           <string>Y</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="y_value">
+          <property name="maxLength">
+           <number>20</number>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="z_label">
+          <property name="text">
+           <string>Z</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="z_value">
+          <property name="maxLength">
+           <number>20</number>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="point_show_btn">
+        <property name="text">
+         <string>Afficher le point</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="discretisation_label">
+        <property name="text">
+         <string>Pas homogène de discrétisation</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="discretisation_slider">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>10</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="polygon_show_btn">
+        <property name="text">
+         <string>Afficher polyèdre de contrôle</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="lineWidth">
+         <number>3</number>
+        </property>
+        <property name="text">
+         <string>Pour se déplacer dans la scène, faire glisser et relâcher le bouton gauche de la souris.</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="GLArea" name="openGLWidget">
+      <property name="minimumSize">
+       <size>
+        <width>500</width>
+        <height>500</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>500</width>
+        <height>500</height>
+       </size>
+      </property>
      </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-      <class>GLArea</class>
+   <class>GLArea</class>
    <extends>QOpenGLWidget</extends>
-      <header location="global">glarea.h</header>
+   <header location="global">glarea.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
