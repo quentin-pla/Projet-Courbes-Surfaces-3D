@@ -36,7 +36,6 @@ SOURCES += \
     courbeparametrique.cpp \
     courbebezier.cpp \
     carreaubeziercubique.cpp \
-    polyedre.cpp \
     polygon.cpp \
 
 HEADERS += \
@@ -48,7 +47,6 @@ HEADERS += \
     courbeparametrique.h \
     courbebezier.h \
     carreaubeziercubique.h \
-    polyedre.h \
     polygon.h \
 
 FORMS += \
