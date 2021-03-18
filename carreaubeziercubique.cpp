@@ -5,6 +5,8 @@ CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, const
     m_drawControlPolygon = drawControlPolygon;
     m_control_points = points;
     m_color = color;
+    m_draw_mode = GL_TRIANGLES;
+    vbos_count = 0;
 
     // Courbes de bézier utilisées pour récupérer la valeur d'un point
     for (int i = 0; i < m_control_points.count(); i += 4) {
@@ -17,7 +19,10 @@ CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, const
 
 void CarreauBezierCubique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
                                 const QVector<unsigned char> &drawTypes_override) {
-    GLObject::draw(program, glFuncs);
+    QVector<unsigned char> draw_modes;
+    if (m_draw_mode != GL_TRIANGLES)
+        draw_modes.insert(0, vbos_count, m_draw_mode);
+    GLObject::draw(program, glFuncs, draw_modes);
     if (m_drawControlPolygon) {
         for (Segment *segment : m_control_segments)
             segment->draw(program, glFuncs);
@@ -47,7 +52,7 @@ void CarreauBezierCubique::showControlPolygon(bool value) {
 void CarreauBezierCubique::render() {
     // Génération de la surface pleine
     for (float y = 0; y < 1; y += .1f) {
-        for (float x = 0; x <= 1.1; x += .1f) {
+        for (float x = 0; x <= 1; x += .1f) {
             Point *point = getValue(x, y, m_color);
             m_vertices.append(point->getCoords());
             m_colors.append(point->getColor());
@@ -56,9 +61,40 @@ void CarreauBezierCubique::render() {
             m_vertices.append(point->getCoords());
             m_colors.append(point->getColor());
             m_normals.append(point->getCoords());
+            point = getValue(x + .1f, y, m_color);
+            m_vertices.append(point->getCoords());
+            m_colors.append(point->getColor());
+            m_normals.append(point->getCoords());
+            addVBO(GL_TRIANGLES);
+            m_vertices.append(point->getCoords());
+            m_colors.append(point->getColor());
+            m_normals.append(point->getCoords());
+            point = getValue(x + .1f, y + .1f, m_color);
+            m_vertices.append(point->getCoords());
+            m_colors.append(point->getColor());
+            m_normals.append(point->getCoords());
+            point = getValue(x, y + .1f, m_color);
+            m_vertices.append(point->getCoords());
+            m_colors.append(point->getColor());
+            m_normals.append(point->getCoords());
+            addVBO(GL_TRIANGLES);
+            vbos_count += 2;
         }
-        addVBO(GL_QUAD_STRIP);
     }
+
+//    for (float y = 0; y < 1; y += .1f) {
+//        for (float x = 0; x <= 1.1; x += .1f) {
+//            Point *point = getValue(x, y, m_color);
+//            m_vertices.append(point->getCoords());
+//            m_colors.append(point->getColor());
+//            m_normals.append(point->getCoords());
+//            point = getValue(x, y + .1f, m_color);
+//            m_vertices.append(point->getCoords());
+//            m_colors.append(point->getColor());
+//            m_normals.append(point->getCoords());
+//        }
+//        addVBO(GL_TRIANGLE_STRIP);
+//    }
 
     // Génération des segments de contrôle
 

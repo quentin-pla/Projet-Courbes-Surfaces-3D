@@ -34,6 +34,16 @@ private:
      */
     QColor m_color = Qt::white;
 
+    /**
+     * Mode du rendu graphique
+     */
+    unsigned char m_draw_mode;
+
+    /**
+     * Nombre de VBOs générés
+     */
+    int vbos_count;
+
 public:
     /**
      * Constructeur
