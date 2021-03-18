@@ -43,7 +43,9 @@ public:
      */
     void showExtremities(bool value);
 
-protected:
+    // GETTERS //
+
+    const QVector<Point *> &getPoints() const;
 
     // OVERRIDE //
 

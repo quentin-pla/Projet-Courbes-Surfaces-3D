@@ -19,10 +19,12 @@ void Polygon::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
 }
 
 void Polygon::render() {
+    QVector3D normal = generateNormal(m_points[0]->getCoords(), m_points[1]->getCoords(),
+                                      m_points[2]->getCoords());
     for (Point *point : m_points) {
         m_vertices.append(point->getCoords());
         m_colors.append(point->getColor());
-        m_normals.append(point->getCoords());
+        m_normals.append(normal);
     }
     addVBO(GL_POLYGON);
     GLObject::render();
@@ -30,4 +32,8 @@ void Polygon::render() {
 
 void Polygon::showExtremities(bool value) {
     m_drawExtremities = value;
+}
+
+const QVector<Point *> &Polygon::getPoints() const {
+    return m_points;
 }
