@@ -14,7 +14,12 @@ private:
     /**
      * Points du segment
      */
-    QVector<Point*> m_points;
+    QVector<Point *> m_points;
+
+    /**
+     * Couleur
+     */
+    QColor *m_color = new QColor(Qt::white);
 
     /**
      * Dessiner les extrémités du segment
@@ -57,7 +62,7 @@ public:
      * Obtenir le point d'arrivée
      * @return
      */
-    Point* getEnd() const;
+    Point *getEnd() const;
 
     /**
      * Afficher les extrémités
@@ -65,7 +70,11 @@ public:
      */
     void showExtremities(bool value);
 
+    // OVERRIDE //
+
     void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
+
+    void render() override;
 };
 
 #endif // SEGMENT_H

@@ -26,6 +26,8 @@ public:
 
     void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
 
+    void render() override;
+
     Point *getValue(float pos, QColor *color = new QColor(Qt::white)) const override;
 };
 

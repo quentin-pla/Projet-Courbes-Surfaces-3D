@@ -21,12 +21,17 @@ private:
     /**
      * Liste des courbes de Bézier
      */
-    QVector<CourbeBezier*> m_bezier_curves;
+    QVector<CourbeBezier *> m_bezier_curves;
 
     /**
      * Polygone de controle
      */
-    QVector<Segment*> m_control_polygon;
+    QVector<Segment *> m_control_polygon;
+
+    /**
+     * Couleur
+     */
+    QColor *m_color = new QColor(Qt::white);
 
 public:
     /**
@@ -51,9 +56,11 @@ public:
 
     // OVERRIDE //
 
-    Point* getValue(float x, float y, QColor* color = new QColor(Qt::white)) const override;
+    Point *getValue(float x, float y, QColor *color = new QColor(Qt::white)) const override;
 
     void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
+
+    void render() override;
 };
 
 #endif //CARREAUBEZIERCUBIQUE_H

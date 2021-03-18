@@ -32,12 +32,17 @@ protected:
     /**
      * Liste des points de controle
      */
-    QVector<Point*> m_control_points;
+    QVector<Point *> m_control_points;
 
     /**
      * Polygone de controle
      */
     QVector<Segment *> m_control_polygon;
+
+    /**
+     * Couleur
+     */
+    QColor *m_color = new QColor(Qt::white);
 
 public:
     /**
@@ -49,6 +54,8 @@ public:
     // OVERRDIDE //
 
     void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
+
+    void render() override;
 };
 
 

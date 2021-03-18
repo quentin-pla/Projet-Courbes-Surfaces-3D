@@ -11,7 +11,7 @@ private:
     /**
      * Couleur
      */
-    QColor m_color;
+    QColor *m_color = new QColor(Qt::white);
 
     /**
      * Taille du point
