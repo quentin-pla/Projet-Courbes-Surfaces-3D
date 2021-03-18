@@ -2,6 +2,7 @@
 #define CARREAUBEZIERCUBIQUE_H
 
 #include "courbebezier.h"
+#include "polygon.h"
 
 /**
  * Carreau de Bézier cubique
@@ -29,9 +30,14 @@ private:
     QVector<Segment *> m_control_polygon;
 
     /**
+     * Polyèdre de contrôle
+     */
+    QVector<Polygon *> control_polyhedra;
+
+    /**
      * Couleur
      */
-    QColor *m_color = new QColor(Qt::white);
+    QColor m_color = Qt::white;
 
 public:
     /**
@@ -40,7 +46,7 @@ public:
      * @param color couleur
      * @param drawControlPolygon afficher le polygone de contrôle
      */
-    explicit CarreauBezierCubique(const QVector<Point *> &points, QColor *color = new QColor(Qt::white),
+    explicit CarreauBezierCubique(const QVector<Point *> &points, const QColor &color = Qt::white,
                                   const bool &drawControlPolygon = false);
 
     /**
@@ -56,9 +62,10 @@ public:
 
     // OVERRIDE //
 
-    Point *getValue(float x, float y, QColor *color = new QColor(Qt::white)) const override;
+    Point *getValue(float x, float y, const QColor &color = Qt::white) const override;
 
-    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
+    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
+              const QVector<unsigned char> &drawTypes_override = {}) override;
 
     void render() override;
 };

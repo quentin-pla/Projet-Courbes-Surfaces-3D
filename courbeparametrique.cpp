@@ -1,6 +1,6 @@
 #include "courbeparametrique.h"
 
-CourbeParametrique::CourbeParametrique(const QVector<Point *> &points, QColor* color,
+CourbeParametrique::CourbeParametrique(const QVector<Point *> &points, const QColor &color,
                                        const bool &drawControlPolygon) : Discretisation(points) {
     m_drawControlPolygon = drawControlPolygon;
     m_control_points = points;
@@ -10,12 +10,13 @@ CourbeParametrique::CourbeParametrique(const QVector<Point *> &points, QColor* c
         m_control_polygon.append(new Segment(m_control_points[i], m_control_points[i + 1], m_color, true));
 }
 
-void CourbeParametrique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
+void CourbeParametrique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
+                              const QVector<unsigned char> &drawTypes_override) {
     if (m_drawControlPolygon) {
         for (Segment *seg : m_control_polygon) {
-            Point* start = seg->getStart();
-            Point* end = seg->getEnd();
-            QColor color(150,150,150);
+            Point *start = seg->getStart();
+            Point *end = seg->getEnd();
+            QColor color(150, 150, 150);
             start->setColor(color);
             end->setColor(color);
             start->draw(program, glFuncs);
@@ -35,9 +36,9 @@ void CourbeParametrique::render() {
         for (Segment *seg : m_control_polygon) {
             for (Point *point : seg->generateStepPoints(0.1, m_color)) {
                 point->setColor(QColor(150, 150, 150));
-                vertices.append(point->getCoords());
-                colors.append(point->getColor());
-                normals.append(point->getCoords());
+                m_vertices.append(point->getCoords());
+                m_colors.append(point->getColor());
+                m_normals.append(point->getCoords());
             }
         }
         addVBO(GL_LINES);

@@ -1,24 +1,25 @@
 #include "point.h"
 
-Point::Point(QColor *color, float size) {
+Point::Point(const QColor &color, float size) {
     m_coords = {0, 0, 0};
     m_color = color;
     m_size = size;
 }
 
-Point::Point(float x, float y, float z, QColor *color, float size) : Point(color, size) {
+Point::Point(float x, float y, float z, const QColor &color, float size) : Point(color, size) {
     m_coords = {x, y, z};
 }
 
-void Point::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
+void Point::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
+                 const QVector<unsigned char> &drawTypes_override) {
     glPointSize(m_size);
     GLObject::draw(program, glFuncs);
 }
 
 void Point::render() {
-    vertices.append(m_coords);
-    colors.append(*m_color);
-    normals.append(m_coords);
+    m_vertices.append(m_coords);
+    m_colors.append(m_color);
+    m_normals.append(m_coords);
     addVBO(GL_POINTS);
     GLObject::render();
 }
@@ -27,7 +28,7 @@ void Point::render() {
 
 QVector3D Point::getCoords() const { return m_coords; }
 
-QColor Point::getColor() const { return *m_color; }
+QColor Point::getColor() const { return m_color; }
 
 float Point::getSize() const { return m_size; }
 
@@ -45,4 +46,6 @@ void Point::setY(const float &v) { m_coords.setY(v); }
 
 void Point::setZ(const float &v) { m_coords.setZ(v); }
 
-void Point::setColor(const QColor &color) { *m_color = color; }
+void Point::setColor(const QColor &color) { m_color = color; }
+
+void Point::setSize(const float &size) { m_size = size; }

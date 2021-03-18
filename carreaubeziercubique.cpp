@@ -1,6 +1,6 @@
 #include "carreaubeziercubique.h"
 
-CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, QColor *color,
+CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, const QColor &color,
                                            const bool &drawControlPolygon) : Discretisation(points) {
     m_drawControlPolygon = drawControlPolygon;
     m_control_points = points;
@@ -27,26 +27,12 @@ CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, QColo
     }
 }
 
-void CarreauBezierCubique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
+void CarreauBezierCubique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
+                                const QVector<unsigned char> &drawTypes_override) {
     GLObject::draw(program, glFuncs);
-//    if (m_drawControlPolygon) {
-//        for (Segment *seg : m_control_polygon) {
-//            Point *start = seg->getStart();
-//            Point *end = seg->getEnd();
-//            QColor color(150, 150, 150);
-//            start->setColor(color);
-//            end->setColor(color);
-//            start->draw(program, glFuncs);
-//            end->draw(program, glFuncs);
-//            for (Point *point : seg->generateStepPoints(0.1)) {
-//                point->setColor(color);
-//                point->draw(program, glFuncs);
-//            }
-//        }
-//    }
 }
 
-Point *CarreauBezierCubique::getValue(float x, float y, QColor *color) const {
+Point *CarreauBezierCubique::getValue(float x, float y, const QColor &color) const {
     QVector<Segment *> sub_segments;
     for (int i = 0; i < m_bezier_curves.count() - 1; ++i) {
         Point *start = m_bezier_curves[i]->getValue(x);
@@ -67,18 +53,20 @@ void CarreauBezierCubique::showControlPolygon(bool value) {
 }
 
 void CarreauBezierCubique::render() {
+    // Génération de la surface pleine
     for (float y = 0; y < 1; y += .1f) {
         for (float x = 0; x <= 1.1; x += .1f) {
             Point *point = getValue(x, y, m_color);
-            vertices.append(point->getCoords());
-            colors.append(point->getColor());
-            normals.append(point->getCoords());
+            m_vertices.append(point->getCoords());
+            m_colors.append(point->getColor());
+            m_normals.append(point->getCoords());
             point = getValue(x, y + .1f, m_color);
-            vertices.append(point->getCoords());
-            colors.append(point->getColor());
-            normals.append(point->getCoords());
+            m_vertices.append(point->getCoords());
+            m_colors.append(point->getColor());
+            m_normals.append(point->getCoords());
         }
         addVBO(GL_QUAD_STRIP);
     }
+
     GLObject::render();
 }

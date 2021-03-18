@@ -21,7 +21,7 @@ protected:
      * @param color couleur
      * @param drawControlPolygon afficher le polygone de contrôle
      */
-    explicit CourbeParametrique(const QVector<Point*> &points, QColor* color = new QColor(Qt::white),
+    explicit CourbeParametrique(const QVector<Point *> &points, const QColor &color = Qt::white,
                                 const bool &drawControlPolygon = false);
 
     /**
@@ -42,7 +42,7 @@ protected:
     /**
      * Couleur
      */
-    QColor *m_color = new QColor(Qt::white);
+    QColor m_color = Qt::white;
 
 public:
     /**
@@ -53,7 +53,8 @@ public:
 
     // OVERRDIDE //
 
-    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
+    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
+              const QVector<unsigned char> &drawTypes_override = {}) override;
 
     void render() override;
 };

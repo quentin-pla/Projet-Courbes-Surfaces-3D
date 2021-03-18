@@ -3,8 +3,6 @@
 
 #include "point.h"
 #include "discretisation.h"
-#include <QVector>
-#include <QColor>
 
 /**
  * Segment
@@ -19,7 +17,7 @@ private:
     /**
      * Couleur
      */
-    QColor *m_color = new QColor(Qt::white);
+    QColor m_color;
 
     /**
      * Dessiner les extrémités du segment
@@ -33,7 +31,7 @@ public:
      * @param end point d'arrivée
      * @param drawExtremities afficher les extrémités
      */
-    Segment(Point* start, Point* end, QColor* color = new QColor(Qt::white), const bool &drawExtremities = false);
+    Segment(Point *start, Point *end, const QColor &color = Qt::white, const bool &drawExtremities = false);
 
     /**
      * Destructeur
@@ -50,7 +48,7 @@ public:
      */
     void setEnd(Point*);
 
-    Point* getValue(float pos, QColor* color = new QColor(Qt::white)) const override;
+    Point *getValue(float pos, const QColor &color = Qt::white) const override;
 
     /**
      * Obtenir le point de départ
@@ -72,7 +70,8 @@ public:
 
     // OVERRIDE //
 
-    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
+    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
+              const QVector<unsigned char> &drawTypes_override = {}) override;
 
     void render() override;
 };

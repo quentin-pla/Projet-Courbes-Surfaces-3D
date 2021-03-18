@@ -16,8 +16,10 @@ public:
      * Dessiner l'objet
      * @param program programme OpenGL
      * @param glFuncs fonctions OpenGL
+     * @param drawType_override type de dessin temporaire
      */
-    virtual void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs);
+    virtual void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
+                      const QVector<unsigned char> &drawTypes_override = {});
 
 protected:
     /**
@@ -33,71 +35,62 @@ protected:
     /**
      * Liste des sommets
      */
-    QVector<QVector3D> vertices;
+    QVector<QVector3D> m_vertices;
 
     /**
      * Liste des couleurs
      */
-    QVector<QColor> colors;
+    QVector<QColor> m_colors;
 
     /**
      * Liste des normales
      */
-    QVector<QVector3D> normals;
-
-    /**
-     * Ajouter un VBO
-     * @param drawType type de dessin
-     */
-    void addVBO(const unsigned char &drawType);
+    QVector<QVector3D> m_normals;
 
     /**
      * Est-ce que l'objet doit être rendu graphiquement
      */
-    bool isRendered = false;
+    bool m_rendered = false;
+
+    /**
+    * Ajouter un VBO
+    * @param drawType type de dessin
+    */
+    void addVBO(const unsigned char &drawType);
+
+    /**
+     * Générer une normale
+     * @param p1 sommet 1
+     * @param p2 sommet 2
+     * @param p3 sommet 3
+     */
+    QVector3D generateNormal(const QVector3D &p1, const QVector3D &p2, const QVector3D &p3);
 
     /**
      * Générer les VBOs nécessaires pour l'affichage
      */
     virtual void render();
 
-    /**
-     * Générer la normale d'un carré / rectangle
-     * @param p1 sommet 1
-     * @param p2 sommet 2
-     * @param p3 sommet 3
-     * @param p4 sommet 4
-     */
-    void generateSquareNormal(const QVector3D &p1, const QVector3D &p2, const QVector3D &p3, const QVector3D &p4);
-
-    /**
-     * Générer la normale d'un triangle
-     * @param p1 sommet 1
-     * @param p2 sommet 2
-     * @param p3 sommet 3
-     */
-    void generateTriangleNormal(const QVector3D &p1, const QVector3D &p2, const QVector3D &p3);
-
 private:
     /**
      * Liste des tampons de sommets
      */
-    QVector<QOpenGLBuffer*> verticesBuffers;
+    QVector<QOpenGLBuffer *> m_verticesBuffers;
 
     /**
      * Liste des tampons de couleurs
      */
-    QVector<QOpenGLBuffer*> colorsBuffers;
+    QVector<QOpenGLBuffer *> m_colorsBuffers;
 
     /**
      * Liste des tampons de normales
      */
-    QVector<QOpenGLBuffer*> normalsBuffers;
+    QVector<QOpenGLBuffer *> m_normalsBuffers;
 
     /**
-     * Type de dessin
+     * Type de dessin pour chaque VBO
      */
-    QVector<unsigned char> drawTypes;
+    QVector<unsigned char> m_drawTypes;
 };
 
 #endif //GLOBJECT_H

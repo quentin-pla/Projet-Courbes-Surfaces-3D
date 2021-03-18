@@ -11,7 +11,7 @@ private:
     /**
      * Couleur
      */
-    QColor *m_color = new QColor(Qt::white);
+    QColor m_color = Qt::white;
 
     /**
      * Taille du point
@@ -29,7 +29,7 @@ public:
      * @param color couleur
      * @param size taille
      */
-    explicit Point(QColor* color = new QColor(Qt::white), float size = 15.0f);
+    explicit Point(const QColor &color = Qt::white, float size = 15.0f);
 
     /**
      * Constructeur surchargé
@@ -39,7 +39,7 @@ public:
      * @param color couleur
      * @param size taille du point
      */
-    Point(float x, float y, float z, QColor* color = new QColor(Qt::white), float size = 15.0f);
+    Point(float x, float y, float z, const QColor &color = Qt::white, float size = 15.0f);
 
     /**
      * Destructeur
@@ -48,7 +48,8 @@ public:
 
     // OVERRIDE //
 
-    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
+    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
+              const QVector<unsigned char> &drawTypes_override = {}) override;
 
     void render() override;
 
@@ -116,6 +117,12 @@ public:
      * @param color couleur
      */
     void setColor(const QColor &color);
+
+    /**
+     * Définir la taille du point
+     * @param size taille
+     */
+    void setSize(const float &size);
 };
 
 #endif // POINT_H

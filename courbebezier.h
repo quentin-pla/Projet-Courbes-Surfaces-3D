@@ -14,7 +14,7 @@ public:
      * @param color couleur
      * @param drawControlPolygon afficher le polygone de controle
      */
-    explicit CourbeBezier(const QVector<Point *> &points, QColor *color = new QColor(Qt::white),
+    explicit CourbeBezier(const QVector<Point *> &points, const QColor &color = Qt::white,
                           const bool &drawControlPolygon = false);
 
     /**
@@ -24,11 +24,12 @@ public:
 
     // OVERRIDE //
 
-    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) override;
+    void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
+              const QVector<unsigned char> &drawTypes_override = {}) override;
 
     void render() override;
 
-    Point *getValue(float pos, QColor *color = new QColor(Qt::white)) const override;
+    Point *getValue(float pos, const QColor &color = Qt::white) const override;
 };
 
 

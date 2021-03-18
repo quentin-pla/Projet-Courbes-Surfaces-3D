@@ -1,12 +1,13 @@
 #include "segment.h"
 
-Segment::Segment(Point* a, Point* b, QColor* color, const bool &drawExtremities) : Discretisation({a,b}) {
+Segment::Segment(Point *a, Point *b, const QColor &color, const bool &drawExtremities) : Discretisation({a, b}) {
     m_drawExtremities = drawExtremities;
     m_points.append({a, b});
     m_color = color;
 }
 
-void Segment::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs) {
+void Segment::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
+                   const QVector<unsigned char> &drawTypes_override) {
     if (m_drawExtremities)
         for (Point *point : m_points)
             point->draw(program, glFuncs);
@@ -17,7 +18,7 @@ void Segment::showExtremities(bool value) {
     m_drawExtremities = value;
 }
 
-Point *Segment::getValue(float pos, QColor *color) const {
+Point *Segment::getValue(float pos, const QColor &color) const {
     float x = (1 - pos) * getStart()->getX() + pos * getEnd()->getX();
     float y = (1 - pos) * getStart()->getY() + pos * getEnd()->getY();
     float z = (1 - pos) * getStart()->getZ() + pos * getEnd()->getZ();
@@ -26,10 +27,10 @@ Point *Segment::getValue(float pos, QColor *color) const {
 
 void Segment::render() {
     for (Point *point : m_points) {
-        point->setColor(*m_color);
-        vertices.append(point->getCoords());
-        colors.append(*m_color);
-        normals.append(point->getCoords());
+        point->setColor(m_color);
+        m_vertices.append(point->getCoords());
+        m_colors.append(m_color);
+        m_normals.append(point->getCoords());
     }
     addVBO(GL_LINES);
 
