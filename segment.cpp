@@ -8,10 +8,11 @@ Segment::Segment(Point *a, Point *b, const QColor &color, const bool &drawExtrem
 
 void Segment::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
                    const QVector<unsigned char> &drawTypes_override) {
+    glLineWidth(3);
+    GLObject::draw(program, glFuncs);
     if (m_drawExtremities)
         for (Point *point : m_points)
             point->draw(program, glFuncs);
-    GLObject::draw(program, glFuncs);
 }
 
 void Segment::showExtremities(bool value) {

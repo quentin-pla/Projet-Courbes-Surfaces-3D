@@ -29,7 +29,6 @@ GLArea::~GLArea() {
 
 void GLArea::initializeGL() {
     initializeOpenGLFunctions();
-    glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glClearColor(0, 0, 0, 1);
