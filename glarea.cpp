@@ -1,6 +1,5 @@
 #include "glarea.h"
 #include "segment.h"
-#include "courbebezier.h"
 #include "carreaubeziercubique.h"
 #include <QDebug>
 
@@ -65,12 +64,14 @@ void GLArea::makeGLObjects() {
     auto P32 = new Point(.3, .4, -.6);
     auto P33 = new Point(.8, .2, -.6);
 
-    auto SB = new CarreauBezierCubique({
-                                               P00, P01, P02, P03,
-                                               P10, P11, P12, P13,
-                                               P20, P21, P22, P23,
-                                               P30, P31, P32, P33
-                                       }, Qt::green);
+    auto SB = new CarreauBezierCubique(
+            {
+                    P00, P01, P02, P03,
+                    P10, P11, P12, P13,
+                    P20, P21, P22, P23,
+                    P30, P31, P32, P33
+            }, Qt::green
+    );
 
     bezier_tile = SB;
 
@@ -181,7 +182,6 @@ void GLArea::setYAngle(int value) {
 }
 
 void GLArea::onShowControlPoly(bool value) {
-    m_show_control_poly = value;
     bezier_tile->showControlPolygon(value);
     update();
 }
@@ -191,8 +191,8 @@ void GLArea::onShowPoint(bool value) {
     update();
 }
 
-void GLArea::onUpdateDiscretisation(int value) {
-    m_discretisation = (float) value;
+void GLArea::onUpdateDiscretisation(double value) {
+    bezier_tile->setDiscretisationStep((float) value);
     update();
 }
 
@@ -211,5 +211,11 @@ void GLArea::onUpdateVPointCoord(double v) {
 }
 
 void GLArea::onUpdateSurfaceView(const QString &value) {
-    //
+    if (value == "Pleine")
+        bezier_tile->setDrawMode(GL_TRIANGLES);
+    else if (value == "Filaire")
+        bezier_tile->setDrawMode(GL_LINE_LOOP);
+    else if (value == "Points")
+        bezier_tile->setDrawMode(GL_POINTS);
+    update();
 }

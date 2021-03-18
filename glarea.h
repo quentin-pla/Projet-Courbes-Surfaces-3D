@@ -76,7 +76,7 @@ protected slots:
      * Lorsque la valeur de la discrétisation est mise à jour
      * @param value valeur
      */
-    void onUpdateDiscretisation(int value);
+    void onUpdateDiscretisation(double value);
 
     /**
      * Lorsque la valeur de l'affichage de la surface est modifiée
@@ -212,19 +212,9 @@ private:
     // PARAMÈTRES INTERFACE GRAPHIQUE //
 
     /**
-     * Affichage du polyèdre de contrôle
-     */
-    bool m_show_control_poly = false;
-
-    /**
      * Affichage du point sur la surface
      */
     bool m_show_point = false;
-
-    /**
-     * Discrétisation de la surface
-     */
-    float m_discretisation = 0.1f;
 
     /**
      * Point affiché sur la surface

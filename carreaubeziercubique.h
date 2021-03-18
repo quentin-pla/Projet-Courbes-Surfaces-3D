@@ -30,6 +30,11 @@ private:
     QVector<Segment *> m_control_segments;
 
     /**
+     * Triangles représentant la surface
+     */
+    QVector<Polygon *> m_surface_triangles;
+
+    /**
      * Couleur
      */
     QColor m_color = Qt::white;
@@ -40,9 +45,9 @@ private:
     unsigned char m_draw_mode;
 
     /**
-     * Nombre de VBOs générés
+     * Pas de discretisation
      */
-    int vbos_count;
+    float m_discretisation_step;
 
 public:
     /**
@@ -64,6 +69,18 @@ public:
      * @param value valeur
      */
     void showControlPolygon(bool value);
+
+    /**
+     * Définir le mode de rendu graphique
+     * @param draw_mode mode
+     */
+    void setDrawMode(unsigned char draw_mode);
+
+    /**
+     * Définir le pas de discrétisation
+     * @param value
+     */
+    void setDiscretisationStep(float value);
 
     // OVERRIDE //
 

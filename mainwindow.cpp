@@ -4,7 +4,8 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    connect(ui->discretisation_slider, SIGNAL(valueChanged(int)), ui->openGLWidget, SLOT(onUpdateDiscretisation(int)));
+    connect(ui->discretisation_spin, SIGNAL(valueChanged(double)), ui->openGLWidget,
+            SLOT(onUpdateDiscretisation(double)));
     connect(ui->point_show_btn, SIGNAL(toggled(bool)), ui->openGLWidget, SLOT(onShowPoint(bool)));
     connect(ui->polygon_show_btn, SIGNAL(toggled(bool)), ui->openGLWidget, SLOT(onShowControlPoly(bool)));
     connect(ui->u_spin, SIGNAL(valueChanged(double)), ui->openGLWidget, SLOT(onUpdateUPointCoord(double)));

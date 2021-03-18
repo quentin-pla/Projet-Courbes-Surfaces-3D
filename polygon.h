@@ -23,6 +23,16 @@ private:
      */
     bool m_drawExtremities;
 
+    /**
+     * Épaisseur des lignes
+     */
+    int m_line_width;
+
+    /**
+     * Générer chaque normale en fonction des coordonnées d'un point
+     */
+    bool m_points_normals;
+
 public:
     /**
      * Constructeur
@@ -46,6 +56,12 @@ public:
     // GETTERS //
 
     const QVector<Point *> &getPoints() const;
+
+    // SETTERS
+
+    void setLineWidth(int lineWidth);
+
+    void enablePointsNormals(bool value);
 
     // OVERRIDE //
 
