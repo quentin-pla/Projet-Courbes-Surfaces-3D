@@ -85,6 +85,11 @@ protected slots:
     void onUpdateSurfaceView(const QString &);
 
     /**
+     * Générer un nouveau carreau de Bézier aléatoire
+     */
+    void onGenerateNewTile();
+
+    /**
      * Définir la valeur de l'angle de vue X
      * @param value valeur
      */
@@ -145,14 +150,9 @@ private:
     QPoint *last_mouse_pos = nullptr;
 
     /**
-     * Objets OpenGL
-     */
-    QVector<GLObject *> gl_objects;
-
-    /**
      * Carreau de bézier cubique
      */
-    CarreauBezierCubique *bezier_tile;
+    CarreauBezierCubique *m_bezier_tile;
 
     /**
      * Matrice de projection
@@ -209,6 +209,12 @@ private:
      */
     void drawScene();
 
+    /**
+     * Générer un carreau de Bézier cubique aléatoire
+     * @return
+     */
+    CarreauBezierCubique *generateRandomBezierTile();
+
     // PARAMÈTRES INTERFACE GRAPHIQUE //
 
     /**
@@ -221,9 +227,35 @@ private:
      */
     Point *m_surface_point = nullptr;
 
+    /**
+     * Valeur point U
+     */
     float m_u_value;
 
+    /**
+      * Valeur point V
+      */
     float m_v_value;
+
+    /**
+     * Mode de rendu graphique
+     */
+    unsigned char m_draw_mode = GL_TRIANGLES;
+
+    /**
+     * Pas de discretisation
+     */
+    float m_discretisation_step = .05f;
+
+    /**
+     * Afficher le polyèdre de contrôle
+     */
+    bool m_draw_bezier_tile_poly = false;
+
+    /**
+     * Points randomisés utilisés pour créer un carreau de bézier aléatoire
+     */
+    QVector<Point *> m_tile_random_points;
 
 protected:
 

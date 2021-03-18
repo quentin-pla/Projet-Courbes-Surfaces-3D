@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->views_combo, SIGNAL(currentTextChanged(const QString &)), ui->openGLWidget,
             SLOT(onUpdateSurfaceView(const QString &)));
     connect(ui->openGLWidget, SIGNAL(updateUIPointCoords(Point * )), this, SLOT(onUpdateUIPointCoords(Point * )));
+    connect(ui->random_tile_btn, SIGNAL(pressed()), ui->openGLWidget, SLOT(onGenerateNewTile()));
 }
 
 MainWindow::~MainWindow() {

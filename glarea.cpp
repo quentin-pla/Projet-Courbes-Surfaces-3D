@@ -22,6 +22,8 @@ GLArea::GLArea(QWidget *parent) : QOpenGLWidget(parent) {
 
 GLArea::~GLArea() {
     delete m_timer;
+    delete m_bezier_tile;
+    delete m_surface_point;
     makeCurrent();
     doneCurrent();
 }
@@ -43,7 +45,39 @@ void GLArea::initializeGL() {
     }
 }
 
+CarreauBezierCubique *GLArea::generateRandomBezierTile() {
+    if (m_tile_random_points.isEmpty()) {
+        float min = -0.8f;
+        float max = 0.8f;
+        float step = 0.4f;
+
+        for (float z = min; z <= max; z += step) {
+            for (float y = min; y <= max; y += step) {
+                for (float x = min; x <= max; x += step) {
+                    m_tile_random_points.append(new Point(x, y, z));
+                }
+            }
+        }
+    }
+
+    QVector<Point *> tile_points;
+
+    for (int i = 0; i < 16; ++i) {
+        Point *point = m_tile_random_points[rand() % m_tile_random_points.count()];
+        while (tile_points.contains(point))
+            point = m_tile_random_points[rand() % m_tile_random_points.count()];
+        tile_points.append(point);
+    }
+
+    QVector<QColor> available_colors = {Qt::white, Qt::green, Qt::blue, Qt::yellow, Qt::magenta, Qt::cyan};
+
+    return new CarreauBezierCubique(tile_points, available_colors[rand() % available_colors.count()],
+                                    m_draw_bezier_tile_poly, m_draw_mode, m_discretisation_step);
+}
+
 void GLArea::makeGLObjects() {
+    // Carreau par défaut
+
     auto P00 = new Point(-.8, -.3, .6);
     auto P01 = new Point(-.3, 0, .6);
     auto P02 = new Point(.3, 0, .6);
@@ -64,7 +98,7 @@ void GLArea::makeGLObjects() {
     auto P32 = new Point(.3, .4, -.6);
     auto P33 = new Point(.8, .2, -.6);
 
-    auto SB = new CarreauBezierCubique(
+    m_bezier_tile = new CarreauBezierCubique(
             {
                     P00, P01, P02, P03,
                     P10, P11, P12, P13,
@@ -73,13 +107,9 @@ void GLArea::makeGLObjects() {
             }, Qt::green
     );
 
-    bezier_tile = SB;
-
-    gl_objects.append(SB);
-
     m_surface_point = new Point(Qt::red, 20);
     m_surface_point->render();
-    m_surface_point->setCoords(bezier_tile->getValue(m_u_value, m_v_value)->getCoords());
+    m_surface_point->setCoords(m_bezier_tile->getValue(m_u_value, m_v_value)->getCoords());
     emit updateUIPointCoords(m_surface_point);
 }
 
@@ -107,12 +137,12 @@ void GLArea::paintGL() {
 }
 
 void GLArea::drawScene() {
-    for (GLObject *object : gl_objects) {
+    if (m_bezier_tile != nullptr) {
         shape_mat = world_mat;
         shape_mat.rotate(m_angle_x, 1, 0, 0);
         shape_mat.rotate(m_angle_y, 0, 1, 0);
         setTransforms();
-        object->draw(m_program, gl_funcs);
+        m_bezier_tile->draw(m_program, gl_funcs);
     }
     if (m_surface_point != nullptr && m_show_point) {
         shape_mat = world_mat;
@@ -182,7 +212,8 @@ void GLArea::setYAngle(int value) {
 }
 
 void GLArea::onShowControlPoly(bool value) {
-    bezier_tile->showControlPolygon(value);
+    m_draw_bezier_tile_poly = value;
+    m_bezier_tile->showControlPolygon(m_draw_bezier_tile_poly);
     update();
 }
 
@@ -192,30 +223,40 @@ void GLArea::onShowPoint(bool value) {
 }
 
 void GLArea::onUpdateDiscretisation(double value) {
-    bezier_tile->setDiscretisationStep((float) value);
+    m_discretisation_step = (float) value;
+    m_bezier_tile->setDiscretisationStep(m_discretisation_step);
     update();
 }
 
 void GLArea::onUpdateUPointCoord(double u) {
     m_u_value = (float) u;
-    m_surface_point->setCoords(bezier_tile->getValue(m_u_value, m_v_value)->getCoords());
+    m_surface_point->setCoords(m_bezier_tile->getValue(m_u_value, m_v_value)->getCoords());
     emit updateUIPointCoords(m_surface_point);
     update();
 }
 
 void GLArea::onUpdateVPointCoord(double v) {
     m_v_value = (float) v;
-    m_surface_point->setCoords(bezier_tile->getValue(m_u_value, m_v_value)->getCoords());
+    m_surface_point->setCoords(m_bezier_tile->getValue(m_u_value, m_v_value)->getCoords());
     emit updateUIPointCoords(m_surface_point);
     update();
 }
 
 void GLArea::onUpdateSurfaceView(const QString &value) {
     if (value == "Pleine")
-        bezier_tile->setDrawMode(GL_TRIANGLES);
+        m_draw_mode = GL_TRIANGLES;
     else if (value == "Filaire")
-        bezier_tile->setDrawMode(GL_LINE_LOOP);
+        m_draw_mode = GL_LINE_LOOP;
     else if (value == "Points")
-        bezier_tile->setDrawMode(GL_POINTS);
+        m_draw_mode = GL_POINTS;
+    m_bezier_tile->setDrawMode(m_draw_mode);
+    update();
+}
+
+void GLArea::onGenerateNewTile() {
+    delete m_bezier_tile;
+    m_bezier_tile = generateRandomBezierTile();
+    m_surface_point->setCoords(m_bezier_tile->getValue(m_u_value, m_v_value)->getCoords());
+    emit updateUIPointCoords(m_surface_point);
     update();
 }
