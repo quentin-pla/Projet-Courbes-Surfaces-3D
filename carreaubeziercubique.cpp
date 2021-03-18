@@ -1,12 +1,13 @@
 #include "carreaubeziercubique.h"
 
 CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, const QColor &color,
-                                           const bool &drawControlPolygon) : Discretisation(points) {
+                                           const bool &drawControlPolygon, const unsigned char &drawMode,
+                                           const float &discretisationStep) : Discretisation(points) {
     m_drawControlPolygon = drawControlPolygon;
     m_control_points = points;
     m_color = color;
-    m_draw_mode = GL_TRIANGLES;
-    m_discretisation_step = .05f;
+    m_draw_mode = drawMode;
+    m_discretisation_step = discretisationStep;
 
     // Courbes de bézier utilisées pour récupérer la valeur d'un point
 
@@ -37,12 +38,14 @@ CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, const
 
 void CarreauBezierCubique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
                                 const QVector<unsigned char> &drawTypes_override) {
+    glEnable(GL_DEPTH_TEST);
     // Affichage triangles recouvrants la surface
     for (Polygon *triangle : m_surface_triangles) {
         triangle->setLineWidth((int) ((m_discretisation_step * 100) / 2.5));
         glPointSize((int) ((m_discretisation_step * 100) / 2));
         triangle->draw(program, glFuncs, {m_draw_mode});
     }
+    glDisable(GL_DEPTH_TEST);
     // Affichage segments de contrôle
     if (m_drawControlPolygon) {
         for (Segment *segment : m_control_segments)
