@@ -39,6 +39,8 @@ void CarreauBezierCubique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions 
                                 const QVector<unsigned char> &drawTypes_override) {
     // Affichage triangles recouvrants la surface
     for (Polygon *triangle : m_surface_triangles) {
+        triangle->setLineWidth((int) ((m_discretisation_step * 100) / 2.5));
+        glPointSize((int) ((m_discretisation_step * 100) / 2));
         triangle->draw(program, glFuncs, {m_draw_mode});
     }
     // Affichage segments de contrôle
