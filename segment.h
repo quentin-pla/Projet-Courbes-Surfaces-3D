@@ -34,14 +34,19 @@ public:
     Segment(Point *start, Point *end, const QColor &color = Qt::white, const bool &drawExtremities = false);
 
     /**
+     * Destructeur
+     */
+    ~Segment();
+
+    /**
      * Définir le point de départ
      */
-    void setStart(Point*);
+    void setStart(Point *);
 
     /**
      * Définir le point d'arrivée
      */
-    void setEnd(Point*);
+    void setEnd(Point *);
 
     Point *getValue(float pos, const QColor &color = Qt::white) const override;
 

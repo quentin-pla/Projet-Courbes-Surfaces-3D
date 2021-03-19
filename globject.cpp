@@ -3,10 +3,13 @@
 GLObject::~GLObject() {
     for (QOpenGLBuffer *verticesBuffer : m_verticesBuffers)
         verticesBuffer->destroy();
+    qDeleteAll(m_verticesBuffers);
     for (QOpenGLBuffer *colorsBuffer : m_colorsBuffers)
         colorsBuffer->destroy();
+    qDeleteAll(m_colorsBuffers);
     for (QOpenGLBuffer *normalsBuffer : m_normalsBuffers)
         normalsBuffer->destroy();
+    qDeleteAll(m_normalsBuffers);
 }
 
 void GLObject::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,

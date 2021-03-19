@@ -4,11 +4,16 @@ Polygon::Polygon(const QVector<Point *> &points, const QColor &color, bool drawE
     m_points = points;
     m_color = color;
     m_drawExtremities = drawExtremities;
-    m_points_normals = 0;
+    m_points_normals = false;
 
     for (Point *point : m_points)
         point->setColor(color);
 }
+
+Polygon::~Polygon() {
+    GLObject::~GLObject();
+}
+
 
 void Polygon::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
                    const QVector<unsigned char> &drawTypes_override) {

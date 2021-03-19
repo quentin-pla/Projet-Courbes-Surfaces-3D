@@ -12,7 +12,12 @@ public:
      * Constructeur
      * @param points liste des points
      */
-    explicit Discretisation(const QVector<Point*> &points);
+    explicit Discretisation(const QVector<Point *> &points);
+
+    /**
+     * Destructeur
+     */
+    ~Discretisation();
 
     /**
      * Obtenir un point à une certaine position

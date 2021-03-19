@@ -24,6 +24,8 @@ GLArea::~GLArea() {
     delete m_timer;
     delete m_bezier_tile;
     delete m_surface_point;
+    qDeleteAll(m_tile_random_points);
+    m_tile_random_points.clear();
     makeCurrent();
     doneCurrent();
 }

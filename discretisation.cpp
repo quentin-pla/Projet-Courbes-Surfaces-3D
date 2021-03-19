@@ -1,8 +1,10 @@
 #include "discretisation.h"
 
-Discretisation::Discretisation(const QVector<Point*> &points) {
+Discretisation::Discretisation(const QVector<Point *> &points) {
     object_points = points;
 }
+
+Discretisation::~Discretisation() = default;
 
 QVector<Point *> Discretisation::generateStepPoints(float step, const QColor &color, bool extrem_points) const {
     QVector<Point *> points;

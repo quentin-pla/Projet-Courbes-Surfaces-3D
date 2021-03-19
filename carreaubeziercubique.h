@@ -61,6 +61,11 @@ public:
                                   const float &discretisationStep = .05f);
 
     /**
+     * Destructeur
+     */
+    ~CarreauBezierCubique();
+
+    /**
      * Afficher le polygone de controle
      * @param value valeur
      */

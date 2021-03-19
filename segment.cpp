@@ -6,6 +6,10 @@ Segment::Segment(Point *a, Point *b, const QColor &color, const bool &drawExtrem
     m_color = color;
 }
 
+Segment::~Segment() {
+    GLObject::~GLObject();
+}
+
 void Segment::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
                    const QVector<unsigned char> &drawTypes_override) {
     glLineWidth(3);

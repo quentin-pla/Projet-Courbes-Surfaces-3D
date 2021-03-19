@@ -36,6 +36,10 @@ CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, const
     render();
 }
 
+CarreauBezierCubique::~CarreauBezierCubique() {
+    GLObject::~GLObject();
+}
+
 void CarreauBezierCubique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
                                 const QVector<unsigned char> &drawTypes_override) {
     glEnable(GL_DEPTH_TEST);

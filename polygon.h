@@ -43,6 +43,11 @@ public:
     explicit Polygon(const QVector<Point *> &points, const QColor &color = Qt::white, bool drawExtremities = false);
 
     /**
+     * Destructeur
+     */
+    ~Polygon();
+
+    /**
      * Afficher les extrémités du polygone
      * @param value valeur
      */

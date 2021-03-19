@@ -10,6 +10,10 @@ CourbeParametrique::CourbeParametrique(const QVector<Point *> &points, const QCo
         m_control_polygon.append(new Segment(m_control_points[i], m_control_points[i + 1], m_color, true));
 }
 
+CourbeParametrique::~CourbeParametrique() {
+    GLObject::~GLObject();
+}
+
 void CourbeParametrique::draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
                               const QVector<unsigned char> &drawTypes_override) {
     if (m_drawControlPolygon) {
