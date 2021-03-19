@@ -29,6 +29,7 @@ public:
      * Constructeur
      * @param start point de départ
      * @param end point d'arrivée
+     * @param color couleur
      * @param drawExtremities afficher les extrémités
      */
     Segment(Point *start, Point *end, const QColor &color = Qt::white, const bool &drawExtremities = false);

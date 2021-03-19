@@ -61,6 +61,8 @@ public:
      * @param points liste des points de contrôle
      * @param color couleur
      * @param drawControlPolygon afficher le polygone de contrôle
+     * @param drawMode mode de rendu graphique
+     * @param discretisationStep pas de discrétisation
      */
     explicit CarreauBezierCubique(const QVector<Point *> &points, const QColor &color = Qt::white,
                                   const bool &drawControlPolygon = false, const unsigned char &drawMode = GL_TRIANGLES,

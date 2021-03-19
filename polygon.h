@@ -55,12 +55,22 @@ public:
 
     // GETTERS //
 
+    /**
+     * Obtenir les points du polygone
+     * @return liste de points
+     */
     const QVector<Point *> &getPoints() const;
 
-    // SETTERS
-
+    /**
+     * Définir l'épaisseur des lignes
+     * @param lineWidth
+     */
     void setLineWidth(int lineWidth);
 
+    /**
+     * Activer la génération de normales en fonction de chaque point
+     * @param value valeur
+     */
     void enablePointsNormals(bool value);
 
     // OVERRIDE //

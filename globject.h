@@ -16,7 +16,7 @@ public:
      * Dessiner l'objet
      * @param program programme OpenGL
      * @param glFuncs fonctions OpenGL
-     * @param drawType_override type de dessin temporaire
+     * @param drawTypes_override types de dessin temporaire (pour chaque VBO)
      */
     virtual void draw(QOpenGLShaderProgram *program, QOpenGLFunctions *glFuncs,
                       const QVector<unsigned char> &drawTypes_override = {});

@@ -172,10 +172,6 @@ void GLArea::setTransforms() {
     m_program->setUniformValue("norMatrix", normal_mat);
 }
 
-void GLArea::keyPressEvent(QKeyEvent *ev) {
-    //
-}
-
 void GLArea::mouseMoveEvent(QMouseEvent *event) {
     if (event->buttons() & Qt::LeftButton) {
         if (last_mouse_pos != nullptr) {

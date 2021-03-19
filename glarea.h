@@ -272,18 +272,39 @@ protected:
 
     // OVERRIDE //
 
+    /**
+     * Initialiser OpenGL
+     */
     void initializeGL() override;
 
+    /**
+     * Redimensionner la scène OpenGL
+     * @param w largeur
+     * @param h hauteur
+     */
     void resizeGL(int w, int h) override;
 
+    /**
+     * Dessiner la scène OpenGL
+     */
     void paintGL() override;
 
-    void keyPressEvent(QKeyEvent *ev) override;
-
+    /**
+     * Lorsque le curseur de la souris se déplace
+     * @param event évènement souris
+     */
     void mouseMoveEvent(QMouseEvent *event) override;
 
+    /**
+     * Lorsqu'un bouton de la souris est relâché
+     * @param event évènement souris
+     */
     void mouseReleaseEvent(QMouseEvent *event) override;
 
+    /**
+     * Lorsqu'un bouton de la souris est pressé
+     * @param event évènement souris
+     */
     void mousePressEvent(QMouseEvent *event) override;
 };
 
