@@ -1,5 +1,9 @@
+#include <QFileDialog>
+#include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "sstream"
+#include <QtConcurrent/QtConcurrent>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -14,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             SLOT(onUpdateSurfaceView(const QString &)));
     connect(ui->openGLWidget, SIGNAL(updateUIPointCoords(Point * )), this, SLOT(onUpdateUIPointCoords(Point * )));
     connect(ui->random_tile_btn, SIGNAL(pressed()), ui->openGLWidget, SLOT(onGenerateNewTile()));
+    connect(ui->generate_obj_btn, SIGNAL(pressed()), ui->openGLWidget, SLOT(onGenerateOBJFile()));
+    connect(ui->openGLWidget, SIGNAL(saveOBJFile(const std::stringstream &)), this,
+            SLOT(onSaveOBJFile(const std::stringstream &)));
 }
 
 MainWindow::~MainWindow() {
@@ -24,4 +31,28 @@ void MainWindow::onUpdateUIPointCoords(Point *point) {
     ui->x_value->setText(QString::number(roundf(point->getX() * 1000) / 1000));
     ui->y_value->setText(QString::number(roundf(point->getY() * 1000) / 1000));
     ui->z_value->setText(QString::number(roundf(point->getZ() * 1000) / 1000));
+}
+
+void MainWindow::onSaveOBJFile(const std::stringstream &data) {
+    auto string_data = new QString(data.str().c_str());
+    // Attente de 200ms sinon bug interface bouton qui reste enclenché
+    QTimer::singleShot(200, [string_data] {
+        QString file_name = QFileDialog::getSaveFileName(nullptr, "Sauvegarder la surface",
+                                                         "carreau_bezier", "Fichier OBJ (*.obj);");
+        if (file_name.isEmpty()) return;
+        else {
+            if (!file_name.contains("."))
+                file_name.append(".obj");
+            QFile file(file_name);
+            if (!file.open(QIODevice::WriteOnly)) {
+                QMessageBox::information(nullptr, tr("Écriture dans le fichier impossible."), file.errorString());
+                return;
+            }
+            QTextStream out(&file);
+            out.setCodec("UTF-8");
+            out.setGenerateByteOrderMark(false);
+            out << *string_data;
+            file.close();
+        }
+    });
 }

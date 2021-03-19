@@ -2,6 +2,7 @@
 #include "segment.h"
 #include "carreaubeziercubique.h"
 #include <QDebug>
+#include "sstream"
 
 GLArea::GLArea(QWidget *parent) : QOpenGLWidget(parent) {
     QSurfaceFormat sf;
@@ -261,4 +262,8 @@ void GLArea::onGenerateNewTile() {
     m_surface_point->setCoords(m_bezier_tile->getValue(m_u_value, m_v_value)->getCoords());
     emit updateUIPointCoords(m_surface_point);
     update();
+}
+
+void GLArea::onGenerateOBJFile() {
+    emit saveOBJFile(m_bezier_tile->generateOBJFile());
 }

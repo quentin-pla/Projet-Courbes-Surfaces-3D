@@ -1,3 +1,4 @@
+#include <sstream>
 #include "carreaubeziercubique.h"
 
 CarreauBezierCubique::CarreauBezierCubique(const QVector<Point *> &points, const QColor &color,
@@ -81,19 +82,18 @@ void CarreauBezierCubique::render() {
     // Génération de la surface du carreau
 
     m_surface_triangles.clear();
+    m_points.clear();
 
     for (float y = 0; y < 1; y += m_discretisation_step) {
         for (float x = 0; x < 1; x += m_discretisation_step) {
-            QVector<Point *> triangles_points;
-            triangles_points.append(getValue(x, y, m_color));
-            triangles_points.append(getValue(x, y + m_discretisation_step, m_color));
-            triangles_points.append(getValue(x + m_discretisation_step, y, m_color));
-            m_surface_triangles.append(new Polygon(triangles_points, m_color));
-            triangles_points.clear();
-            triangles_points.append(getValue(x + m_discretisation_step, y, m_color));
-            triangles_points.append(getValue(x + m_discretisation_step, y + m_discretisation_step, m_color));
-            triangles_points.append(getValue(x, y + m_discretisation_step, m_color));
-            m_surface_triangles.append(new Polygon(triangles_points, m_color));
+            QVector<Point *> points;
+            points.append(getValue(x, y, m_color));
+            points.append(getValue(x, y + m_discretisation_step, m_color));
+            points.append(getValue(x + m_discretisation_step, y, m_color));
+            points.append(getValue(x + m_discretisation_step, y + m_discretisation_step, m_color));
+            m_surface_triangles.append(new Polygon({points[0], points[1], points[2]}, m_color));
+            m_surface_triangles.append(new Polygon({points[2], points[3], points[1]}, m_color));
+            m_points.append(points);
         }
     }
 
@@ -110,4 +110,57 @@ void CarreauBezierCubique::setDrawMode(unsigned char draw_mode) {
 void CarreauBezierCubique::setDiscretisationStep(float value) {
     m_discretisation_step = value;
     render();
+}
+
+std::stringstream CarreauBezierCubique::generateOBJFile() const {
+    QVector<QString> obj_points;
+    for (Point *point : m_points)
+        obj_points.append(QString::number(point->getX()) + " " +
+                          QString::number(point->getY()) + " " +
+                          QString::number(point->getZ()));
+    std::stringstream data;
+    data << "o surface_bezier" << std::endl << std::endl;
+
+    // Sommets
+    for (const QString &point : obj_points)
+        data << "v " << point.toStdString() << std::endl;
+    data << std::endl;
+
+    // Normales
+    for (const QString &point : obj_points)
+        data << "vn " << point.toStdString() << std::endl;
+    data << std::endl;
+
+    // Faces
+    for (int i = 0; i < obj_points.count() - 3; i += 4) {
+        int p0 = i + 1;
+        int p1 = i + 2;
+        int p2 = i + 3;
+        int p3 = i + 4;
+
+        // Premier triangle (face avant)
+        data << "f ";
+        data << p2 << "//" << p2 << " ";
+        data << p1 << "//" << p1 << " ";
+        data << p0 << "//" << p0 << std::endl;
+
+        // Premier triangle (face arrière)
+        data << "f ";
+        data << p0 << "//" << p0 << " ";
+        data << p1 << "//" << p1 << " ";
+        data << p2 << "//" << p2 << std::endl;
+
+        // Deuxième triangle (face avant)
+        data << "f ";
+        data << p2 << "//" << p2 << " ";
+        data << p3 << "//" << p3 << " ";
+        data << p1 << "//" << p1 << std::endl;
+
+        // Deuxième triangle (face arrière)
+        data << "f ";
+        data << p1 << "//" << p1 << " ";
+        data << p3 << "//" << p3 << " ";
+        data << p2 << "//" << p2 << std::endl;
+    }
+    return data;
 }

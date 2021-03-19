@@ -33,6 +33,12 @@ protected slots:
      */
     void onUpdateUIPointCoords(Point *point);
 
+    /**
+     * À la sauvegarde d'un fichier OBJ
+     * @param data
+     */
+    void onSaveOBJFile(const std::stringstream &data);
+
 private:
     /**
      * Interface utilisateur

@@ -8,6 +8,7 @@
  * Carreau de Bézier cubique
  */
 class CarreauBezierCubique : public GLObject, public Discretisation {
+
 private:
     /**
      * Dessiner le polygone de controle
@@ -18,6 +19,11 @@ private:
      * Points de controle
      */
     QVector<Point *> m_control_points;
+
+    /**
+     * Points de la surface
+     */
+    QVector<Point *> m_points;
 
     /**
      * Courbes de Bézier
@@ -82,6 +88,11 @@ public:
      * @param value
      */
     void setDiscretisationStep(float value);
+
+    /**
+     * Générer le fichier OBJ lié
+     */
+    std::stringstream generateOBJFile() const;
 
     // OVERRIDE //
 

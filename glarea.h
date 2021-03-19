@@ -41,6 +41,12 @@ signals:
      */
     void updateUIPointCoords(Point *point);
 
+    /**
+     * Sauvegarder un fichier OBJ
+     * @param data données
+     */
+    void saveOBJFile(const std::stringstream &data);
+
 protected slots:
 
     /**
@@ -88,6 +94,11 @@ protected slots:
      * Générer un nouveau carreau de Bézier aléatoire
      */
     void onGenerateNewTile();
+
+    /**
+     * Générer le fichier OBJ de la surface en cours
+     */
+    void onGenerateOBJFile();
 
     /**
      * Définir la valeur de l'angle de vue X
