@@ -159,7 +159,6 @@ std::stringstream CarreauBezierCubique::generateOBJFile() const {
     // Définition points et segments de controle
     data << "o controls" << std::endl << std::endl;
 
-    int surface_points_count = obj_points.count();
     obj_points.clear();
 
     // Récupération des points de contrôle
@@ -175,17 +174,17 @@ std::stringstream CarreauBezierCubique::generateOBJFile() const {
 
     // Génération des points de contrôle
     data << "p ";
-    for (int i = surface_points_count; i < surface_points_count + obj_points.count(); ++i)
+    for (int i = 0; i < obj_points.count(); ++i)
         data << i + 1 << " ";
     data << std::endl << std::endl;
 
     // Génération des segments de contrôle
-    for (int i = surface_points_count; i < surface_points_count + obj_points.count() - 1; i += 4) {
+    for (int i = 0; i < obj_points.count() - 1; i += 4) {
         data << "l " << i + 1 << " " << i + 2 << " " << std::endl;
         data << "l " << i + 2 << " " << i + 3 << " " << std::endl;
         data << "l " << i + 3 << " " << i + 4 << " " << std::endl;
     }
-    for (int i = surface_points_count; i < surface_points_count + 4; ++i) {
+    for (int i = 0; i < 4; ++i) {
         data << "l " << i + 1 << " " << i + 5 << " " << std::endl;
         data << "l " << i + 5 << " " << i + 9 << " " << std::endl;
         data << "l " << i + 9 << " " << i + 13 << " " << std::endl;

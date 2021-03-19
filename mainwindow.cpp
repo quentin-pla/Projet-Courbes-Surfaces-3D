@@ -43,16 +43,22 @@ void MainWindow::onSaveOBJFile(const std::stringstream &data) {
         else {
             if (!file_name.contains("."))
                 file_name.append(".obj");
-            QFile file(file_name);
-            if (!file.open(QIODevice::WriteOnly)) {
-                QMessageBox::information(nullptr, tr("Écriture dans le fichier impossible."), file.errorString());
+            QFile tile_file(file_name);
+            QFile controls_file(file_name.mid(0, file_name.indexOf('.')) + "_controls.obj");
+            if (!tile_file.open(QIODevice::WriteOnly) || !controls_file.open(QIODevice::WriteOnly)) {
+                QMessageBox::information(nullptr, tr("Écriture dans le fichier impossible."), tile_file.errorString());
                 return;
             }
-            QTextStream out(&file);
-            out.setCodec("UTF-8");
-            out.setGenerateByteOrderMark(false);
-            out << *string_data;
-            file.close();
+            QTextStream tile_out(&tile_file);
+            tile_out.setCodec("UTF-8");
+            tile_out.setGenerateByteOrderMark(false);
+            tile_out << string_data->mid(0, string_data->indexOf("o controls"));
+            tile_file.close();
+            QTextStream controls_out(&controls_file);
+            controls_out.setCodec("UTF-8");
+            controls_out.setGenerateByteOrderMark(false);
+            controls_out << string_data->mid(string_data->indexOf("o controls"));
+            controls_file.close();
         }
     });
 }
