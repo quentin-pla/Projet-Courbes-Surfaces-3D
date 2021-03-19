@@ -246,7 +246,7 @@ void GLArea::onUpdateVPointCoord(double v) {
 }
 
 void GLArea::onUpdateSurfaceView(const QString &value) {
-    if (value == "Pleine")
+    if (value == "Plein")
         m_draw_mode = GL_TRIANGLES;
     else if (value == "Filaire")
         m_draw_mode = GL_LINE_LOOP;

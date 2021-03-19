@@ -173,13 +173,13 @@ std::stringstream CarreauBezierCubique::generateOBJFile() const {
         data << "v " << point.toStdString() << std::endl;
     data << std::endl;
 
-    // Génération des points
+    // Génération des points de contrôle
     data << "p ";
     for (int i = surface_points_count; i < surface_points_count + obj_points.count(); ++i)
         data << i + 1 << " ";
     data << std::endl << std::endl;
 
-    // Génération des segments
+    // Génération des segments de contrôle
     for (int i = surface_points_count; i < surface_points_count + obj_points.count() - 1; i += 4) {
         data << "l " << i + 1 << " " << i + 2 << " " << std::endl;
         data << "l " << i + 2 << " " << i + 3 << " " << std::endl;

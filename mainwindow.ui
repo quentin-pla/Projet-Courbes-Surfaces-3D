@@ -23,7 +23,7 @@
       <item>
        <widget class="QLabel" name="view_label">
         <property name="text">
-         <string>Affichage de la surface</string>
+         <string>Affichage carreau</string>
         </property>
        </widget>
       </item>
@@ -31,7 +31,7 @@
        <widget class="QComboBox" name="views_combo">
         <item>
          <property name="text">
-          <string>Pleine</string>
+             <string>Plein</string>
          </property>
         </item>
         <item>
@@ -122,7 +122,7 @@
       <item>
        <widget class="QLabel" name="point_coords_label">
         <property name="text">
-         <string>Coordonnées du point</string>
+            <string>Coordonnées point</string>
         </property>
        </widget>
       </item>
@@ -184,7 +184,7 @@
       <item>
        <widget class="QPushButton" name="point_show_btn">
         <property name="text">
-         <string>Afficher le point</string>
+            <string>Afficher point</string>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -234,7 +234,7 @@
       <item>
        <widget class="QPushButton" name="polygon_show_btn">
         <property name="text">
-         <string>Afficher polyèdre de contrôle</string>
+            <string>Afficher contrôles</string>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -285,14 +285,14 @@
          <enum>Qt::Vertical</enum>
         </property>
         <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
+            <enum>QSizePolicy::Fixed</enum>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-             <width>20</width>
-             <height>10</height>
-         </size>
-        </property>
+           <property name="sizeHint" stdset="0">
+               <size>
+                   <width>20</width>
+                   <height>10</height>
+               </size>
+           </property>
        </spacer>
       </item>
          <item>
@@ -305,7 +305,7 @@
          <item>
              <widget class="QPushButton" name="generate_obj_btn">
                  <property name="text">
-                     <string>Générer fichier OBJ</string>
+                     <string>Exporter format OBJ</string>
                  </property>
              </widget>
          </item>
@@ -316,12 +316,12 @@
                  </property>
                  <property name="sizeHint" stdset="0">
                      <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
+                         <width>20</width>
+                         <height>40</height>
+                     </size>
+                 </property>
+             </spacer>
+         </item>
      </layout>
     </item>
     <item>
