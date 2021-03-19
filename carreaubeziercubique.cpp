@@ -114,12 +114,16 @@ void CarreauBezierCubique::setDiscretisationStep(float value) {
 
 std::stringstream CarreauBezierCubique::generateOBJFile() const {
     QVector<QString> obj_points;
+
+    // Récupération des points de la surface
     for (Point *point : m_points)
         obj_points.append(QString::number(point->getX()) + " " +
                           QString::number(point->getY()) + " " +
                           QString::number(point->getZ()));
+
+    // Définition du carreau
     std::stringstream data;
-    data << "o surface_bezier" << std::endl << std::endl;
+    data << "o bezier_tile" << std::endl << std::endl;
 
     // Sommets
     for (const QString &point : obj_points)
@@ -144,23 +148,48 @@ std::stringstream CarreauBezierCubique::generateOBJFile() const {
         data << p1 << "//" << p1 << " ";
         data << p0 << "//" << p0 << std::endl;
 
-        // Premier triangle (face arrière)
-        data << "f ";
-        data << p0 << "//" << p0 << " ";
-        data << p1 << "//" << p1 << " ";
-        data << p2 << "//" << p2 << std::endl;
-
         // Deuxième triangle (face avant)
         data << "f ";
         data << p2 << "//" << p2 << " ";
         data << p3 << "//" << p3 << " ";
         data << p1 << "//" << p1 << std::endl;
-
-        // Deuxième triangle (face arrière)
-        data << "f ";
-        data << p1 << "//" << p1 << " ";
-        data << p3 << "//" << p3 << " ";
-        data << p2 << "//" << p2 << std::endl;
     }
+    data << std::endl;
+
+    // Définition points et segments de controle
+    data << "o controls" << std::endl << std::endl;
+
+    int surface_points_count = obj_points.count();
+    obj_points.clear();
+
+    // Récupération des points de contrôle
+    for (Point *point : m_control_points)
+        obj_points.append(QString::number(point->getX()) + " " +
+                          QString::number(point->getY()) + " " +
+                          QString::number(point->getZ()));
+
+    // Sommets
+    for (const QString &point : obj_points)
+        data << "v " << point.toStdString() << std::endl;
+    data << std::endl;
+
+    // Génération des points
+    data << "p ";
+    for (int i = surface_points_count; i < surface_points_count + obj_points.count(); ++i)
+        data << i + 1 << " ";
+    data << std::endl << std::endl;
+
+    // Génération des segments
+    for (int i = surface_points_count; i < surface_points_count + obj_points.count() - 1; i += 4) {
+        data << "l " << i + 1 << " " << i + 2 << " " << std::endl;
+        data << "l " << i + 2 << " " << i + 3 << " " << std::endl;
+        data << "l " << i + 3 << " " << i + 4 << " " << std::endl;
+    }
+    for (int i = surface_points_count; i < surface_points_count + 4; ++i) {
+        data << "l " << i + 1 << " " << i + 5 << " " << std::endl;
+        data << "l " << i + 5 << " " << i + 9 << " " << std::endl;
+        data << "l " << i + 9 << " " << i + 13 << " " << std::endl;
+    }
+
     return data;
 }
